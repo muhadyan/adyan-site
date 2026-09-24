@@ -1,0 +1,29 @@
+{
+  "name": "adyan-site",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/sitemap": "^3.7.4",
+    "@playwright/test": "^1.63.0",
+    "@types/bun": "latest",
+    "typescript": "^5",
+    "vitest": "^5.0.1",
+    "wrangler": "^4.137.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource/martian-mono": "^5.3.0",
+    "astro": "^7.3.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "og": "bun scripts/og.ts",
+    "shoot": "bun scripts/shoot.ts",
+    "deploy": "bun run build && wrangler pages deploy dist --project-name adyan-site --branch main"
+  }
+}

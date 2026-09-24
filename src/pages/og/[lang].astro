@@ -1,0 +1,81 @@
+---
+// Renders the 1200x630 link-preview card. `bun run og` screenshots it into
+// public/og-<lang>.png. Not linked, not indexed.
+import "../../styles/global.css";
+import Receipt from "../../components/Receipt.astro";
+import { SITE } from "../../config";
+import { en } from "../../content/en";
+import { id } from "../../content/id";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "id" } }, { params: { lang: "en" } }];
+}
+
+const copy = Astro.params.lang === "en" ? en : id;
+---
+
+<!doctype html>
+<html lang={Astro.params.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>OG</title>
+  </head>
+  <body>
+    <main class="card">
+      <div class="text">
+        <p class="name">{SITE.name}</p>
+        <h1>{copy.hero.title}</h1>
+        <p class="url num">adyan.admos.id</p>
+      </div>
+      <div class="slip"><Receipt receipt={copy.hero.receipt} /></div>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    align-items: center;
+    height: 100%;
+    padding: 56px 72px;
+    border-bottom: 14px solid var(--ledger);
+  }
+
+  .text {
+    display: grid;
+    gap: 28px;
+  }
+
+  .name {
+    font-weight: 700;
+    font-size: 26px;
+    font-variation-settings: "wdth" 118;
+  }
+
+  h1 {
+    font-size: 58px;
+    font-variation-settings: "wdth" 125;
+  }
+
+  .url {
+    color: var(--ledger);
+    font-size: 22px;
+  }
+
+  .slip {
+    zoom: 0.92;
+  }
+
+  .slip :global(*) {
+    animation: none !important;
+  }
+</style>

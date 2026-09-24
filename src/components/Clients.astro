@@ -1,0 +1,165 @@
+---
+import { Image } from "astro:assets";
+import type { Copy, Locale } from "../content/types";
+import { WORK } from "../data/work";
+import Figures from "./Figures.astro";
+
+interface Props {
+  clients: Copy["clients"];
+  locale: Locale;
+}
+
+const { clients, locale } = Astro.props;
+---
+
+<section class="section" aria-labelledby="clients-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="clients-title">{clients.title}</h2>
+      <p>{clients.intro}</p>
+    </div>
+    <ul class="list">
+      {
+        clients.featured.map((client) => {
+          const work = WORK[client.slug]!;
+          const shot = work.shots[0];
+          return (
+            <li class="row">
+              <div class="who">
+                <h3>{client.name}</h3>
+                <p class="role">{client.role}</p>
+                <p class="period num">{client.period}</p>
+              </div>
+              <div class="what">
+                <p>{client.summary}</p>
+                <Figures figures={client.figures} />
+                <a href={work.url} rel="noopener" target="_blank">
+                  {clients.visit}
+                  <span class="visually-hidden">: {client.name}</span>
+                </a>
+              </div>
+              {shot && (
+                <figure class="shot">
+                  <Image
+                    src={shot.image}
+                    alt={shot.alt[locale]}
+                    widths={[320, 640]}
+                    sizes="(min-width: 900px) 300px, 100vw"
+                    loading="lazy"
+                  />
+                </figure>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+    <div class="others">
+      <h3>{clients.othersTitle}</h3>
+      <ul>
+        {
+          clients.others.map((o) => (
+            <li>
+              <span class="other-name">{o.name}</span> <span class="other-note">{o.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .list {
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+
+  .row {
+    display: grid;
+    gap: 20px;
+    padding-block: 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 900px) {
+    .row {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 3.2fr);
+      gap: 40px;
+    }
+  }
+
+  h3 {
+    font-size: var(--step-2);
+    font-variation-settings: "wdth" 118;
+  }
+
+  .role {
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  .period {
+    margin-top: 4px;
+    color: var(--ink-soft);
+    font-size: 0.75rem;
+  }
+
+  .what {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+
+  .what a {
+    justify-self: start;
+    font-weight: 600;
+  }
+
+  .shot {
+    overflow: hidden;
+    align-self: start;
+    background: var(--slip);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .shot :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .others {
+    display: grid;
+    gap: 14px;
+    margin-top: 40px;
+  }
+
+  .others h3 {
+    font-size: var(--step-0);
+    font-variation-settings: "wdth" 100;
+    letter-spacing: 0;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .others ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .other-name {
+    font-weight: 650;
+  }
+
+  .other-note {
+    color: var(--ink-soft);
+    font-size: 0.875rem;
+  }
+</style>

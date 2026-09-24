@@ -1,0 +1,104 @@
+---
+import { SITE, waLink } from "../config";
+import type { Copy } from "../content/types";
+import WaIcon from "./WaIcon.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const { footer } = copy;
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="cta">
+      <h2>{footer.title}</h2>
+      <p>{footer.body}</p>
+      <a class="button" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+        <WaIcon />
+        {footer.cta}
+      </a>
+      <p class="email">
+        {footer.email}: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+    </div>
+    <div class="base">
+      <p>© {new Date().getFullYear()} {SITE.name}, Yogyakarta</p>
+      <ul>
+        <li><a href={SITE.github} rel="noopener" target="_blank">{footer.github}</a></li>
+        <li><a href={SITE.linkedin} rel="noopener" target="_blank">{footer.linkedin}</a></li>
+        <li><a href={SITE.cv} download>{footer.cv}</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ledger);
+    color: #fff;
+  }
+
+  .cta {
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+    padding-block: clamp(72px, 10vw, 120px);
+  }
+
+  h2 {
+    font-size: var(--step-4);
+    font-variation-settings: "wdth" 125;
+    max-width: 16ch;
+  }
+
+  .cta > p {
+    max-width: 32rem;
+    font-size: var(--step-1);
+    color: #e3eee8;
+  }
+
+  .button {
+    margin-top: 12px;
+    background: #fff;
+    color: var(--ledger-deep);
+  }
+
+  .button:hover {
+    background: var(--ledger-tint);
+    color: var(--ledger-deep);
+  }
+
+  .email {
+    color: #e3eee8;
+  }
+
+  a:not(.button) {
+    color: #fff;
+  }
+
+  a:focus-visible {
+    outline-color: #fff;
+  }
+
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-block: 24px 32px;
+    border-top: 1px solid rgb(255 255 255 / 0.25);
+    font-size: 0.875rem;
+    color: #d3e3da;
+  }
+
+  .base ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    padding: 0;
+    list-style: none;
+  }
+</style>

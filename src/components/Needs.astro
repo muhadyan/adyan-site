@@ -1,0 +1,107 @@
+---
+import type { Copy } from "../content/types";
+
+interface Props {
+  needs: Copy["needs"];
+}
+
+const { needs } = Astro.props;
+---
+
+<section class="section" aria-labelledby="needs-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="needs-title">{needs.title}</h2>
+      <p>{needs.intro}</p>
+    </div>
+    <table class="ledger">
+      <thead>
+        <tr>
+          <th scope="col">{needs.columns.need}</th>
+          <th scope="col">{needs.columns.build}</th>
+          <th scope="col">{needs.columns.proof}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          needs.rows.map((row) => (
+            <tr>
+              <th scope="row">{row.need}</th>
+              <td>{row.build}</td>
+              <td class="proof">{row.proof}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    /* Double vertical rule at the left, as on an accounting pad. */
+    border-left: 3px double var(--ledger);
+  }
+
+  thead th {
+    padding: 0 16px 12px;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  tbody th,
+  tbody td {
+    padding: 18px 16px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  tbody th {
+    width: 30%;
+    font-weight: 650;
+    font-size: var(--step-1);
+    line-height: 1.25;
+    font-variation-settings: "wdth" 108;
+  }
+
+  tbody td {
+    color: var(--ink-soft);
+  }
+
+  .proof {
+    width: 22%;
+    color: var(--ledger);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 759px) {
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    tbody tr {
+      display: grid;
+      gap: 6px;
+      padding: 18px 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    tbody th,
+    tbody td {
+      width: auto;
+      padding: 0;
+      border: 0;
+    }
+  }
+</style>

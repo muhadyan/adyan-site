@@ -1,0 +1,131 @@
+---
+import type { Copy, Locale } from "../content/types";
+import { WORK } from "../data/work";
+import Shots from "./Shots.astro";
+
+interface Props {
+  products: Copy["products"];
+  locale: Locale;
+}
+
+const { products, locale } = Astro.props;
+---
+
+<section class="section" aria-labelledby="products-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="products-title">{products.title}</h2>
+      <p>{products.intro}</p>
+    </div>
+    <ul class="list">
+      {
+        products.items.map((item, i) => {
+          const work = WORK[item.slug]!;
+          return (
+            <li class="item">
+              <div class="text">
+                <h3>{item.name}</h3>
+                <p class="tagline">{item.tagline}</p>
+                <p class="summary">{item.summary}</p>
+                <ul class="points">
+                  {item.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+                <dl class="facts">
+                  <div>
+                    <dt>{products.statusLabel}</dt>
+                    <dd>{item.status}</dd>
+                  </div>
+                  <div>
+                    <dt>{products.stackLabel}</dt>
+                    <dd>{item.stack.join(", ")}</dd>
+                  </div>
+                </dl>
+                <a class="visit" href={work.url} rel="noopener" target="_blank">
+                  {products.visit}
+                  <span class="visually-hidden">: {item.name}</span>
+                </a>
+              </div>
+              <Shots shots={work.shots} locale={locale} eager={i === 0} />
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .list {
+    display: grid;
+    gap: clamp(56px, 8vw, 96px);
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    gap: 28px;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .item {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 56px;
+    }
+  }
+
+  h3 {
+    font-size: var(--step-3);
+    font-variation-settings: "wdth" 122;
+  }
+
+  .tagline {
+    margin-top: 6px;
+    color: var(--ledger);
+    font-weight: 600;
+  }
+
+  .summary {
+    margin-top: 16px;
+  }
+
+  .points {
+    display: grid;
+    gap: 6px;
+    margin-top: 16px;
+    padding-left: 1.1em;
+    color: var(--ink-soft);
+  }
+
+  .points li::marker {
+    color: var(--ledger);
+  }
+
+  .facts {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+  }
+
+  .facts div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 12px;
+  }
+
+  .facts dt {
+    color: var(--ink-soft);
+  }
+
+  .visit {
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+import { waLink } from "../config";
+import type { Copy } from "../content/types";
+import Receipt from "./Receipt.astro";
+import WaIcon from "./WaIcon.astro";
+
+interface Props {
+  copy: Copy;
+}
+
+const { copy } = Astro.props;
+const { hero } = copy;
+---
+
+<section class="hero wrap" aria-labelledby="hero-title">
+  <div class="text">
+    <h1 id="hero-title">{hero.title}</h1>
+    <p class="lede">{hero.lede}</p>
+    <p class="proof">{hero.proof}</p>
+    <div class="cta">
+      <a class="button" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+        <WaIcon />
+        {hero.cta}
+      </a>
+      <p class="cta-note">{hero.ctaNote}</p>
+    </div>
+  </div>
+  <Receipt receipt={hero.receipt} />
+</section>
+
+<style>
+  .hero {
+    /* The tilted receipt and its stamp must never cause sideways scroll. */
+    overflow-x: clip;
+    overflow-clip-margin: 8px;
+    display: grid;
+    gap: 56px;
+    align-items: center;
+    padding-block: clamp(48px, 8vw, 104px) clamp(64px, 9vw, 120px);
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 64px;
+    }
+  }
+
+  h1 {
+    font-size: var(--step-4);
+    font-variation-settings: "wdth" 125;
+    max-width: 15ch;
+  }
+
+  .lede {
+    margin-top: 24px;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    max-width: 34rem;
+  }
+
+  .proof {
+    margin-top: 20px;
+    padding-left: 16px;
+    border-left: 3px double var(--ledger);
+    color: var(--ink-soft);
+    max-width: 34rem;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-top: 36px;
+  }
+
+  .cta-note {
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+  }
+</style>
