@@ -13,6 +13,18 @@ const { locale, copy, noindex = false } = Astro.props;
 const path = locale === "id" ? "/" : "/en/";
 const canonical = new URL(path, SITE.url).href;
 const ogImage = new URL(`/og-${locale}.png`, SITE.url).href;
+
+// Structured data for search engines. "<" is escaped so no value can close the script tag.
+const personJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.name,
+  url: SITE.url,
+  jobTitle: "Backend Engineer",
+  email: `mailto:${SITE.email}`,
+  address: { "@type": "PostalAddress", addressLocality: "Yogyakarta", addressCountry: "ID" },
+  sameAs: [SITE.github, SITE.linkedin],
+}).replace(/</g, "\\u003c");
 ---
 
 <!doctype html>
@@ -42,19 +54,7 @@ const ogImage = new URL(`/og-${locale}.png`, SITE.url).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: SITE.name,
-        url: SITE.url,
-        jobTitle: "Backend Engineer",
-        email: `mailto:${SITE.email}`,
-        address: { "@type": "PostalAddress", addressLocality: "Yogyakarta", addressCountry: "ID" },
-        sameAs: [SITE.github, SITE.linkedin],
-      })}
-    />
+    <script type="application/ld+json" set:html={personJsonLd} />
   </head>
   <body>
     <slot />
