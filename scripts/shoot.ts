@@ -9,6 +9,7 @@ const SHOTS: Shot[] = [
   { name: "admos-laris", url: "https://laris.admos.id/" },
   { name: "ringkasaja", url: "https://ringkasaja.com/" },
   { name: "ringkasaja-demo", url: "https://app.ringkasaja.com/demo" },
+  { name: "ummu-alfatih", url: "https://ummualfatih.id/products" },
   { name: "search-array", url: "https://search-array.com/" },
   { name: "katalis", url: "https://katalis.ai/" },
   { name: "wateriq", url: "https://wateriq.solarchapter.com/" },

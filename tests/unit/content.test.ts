@@ -36,6 +36,16 @@ describe("copy", () => {
     expect(en.products.items.map((p) => p.slug)).toEqual(id.products.items.map((p) => p.slug));
     expect(en.clients.featured.map((c) => c.slug)).toEqual(id.clients.featured.map((c) => c.slug));
   });
+
+  // Buyers don't care about backend vs frontend. Official job titles in the
+  // client list may still say "Backend"; the self-description must not.
+  it("introduces Adyan as a software engineer, not a backend engineer", () => {
+    for (const copy of [id, en]) {
+      const { clients: _officialTitles, ...self } = copy;
+      expect(strings(self).filter((s) => /backend/i.test(s))).toEqual([]);
+      expect(copy.meta.description).toMatch(/software engineer/i);
+    }
+  });
 });
 
 describe("work data", () => {

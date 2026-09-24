@@ -115,6 +115,18 @@ export const WORK: Record<string, Work> = {
       },
     ]),
   },
+  "ummu-alfatih": {
+    url: "https://ummualfatih.id",
+    shots: shots([
+      {
+        file: "ummu-alfatih",
+        alt: {
+          id: "Katalog toko online Ummu Alfatih: outer, khiban, dan khimar dengan harga diskon",
+          en: "Ummu Alfatih online shop catalogue: outerwear, khiban and khimar at sale prices",
+        },
+      },
+    ]),
+  },
   "search-array": {
     url: "https://search-array.com",
     shots: shots([
