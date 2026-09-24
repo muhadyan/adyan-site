@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import type { Copy, Locale } from "../content/types";
+import Header from "./Header.astro";
+import Hero from "./Hero.astro";
+import Needs from "./Needs.astro";
+import Products from "./Products.astro";
+import Clients from "./Clients.astro";
+import Why from "./Why.astro";
+import Process from "./Process.astro";
+import Faq from "./Faq.astro";
+import Footer from "./Footer.astro";
+
+interface Props {
+  locale: Locale;
+  copy: Copy;
+}
+
+const { locale, copy } = Astro.props;
+---
+
+<Base locale={locale} copy={copy}>
+  <Header locale={locale} copy={copy} />
+  <main id="main">
+    <Hero copy={copy} />
+    <Needs needs={copy.needs} />
+    <Products products={copy.products} locale={locale} />
+    <Why why={copy.why} />
+    <Clients clients={copy.clients} locale={locale} />
+    <Process process={copy.process} />
+    <Faq faq={copy.faq} />
+  </main>
+  <Footer copy={copy} />
+</Base>

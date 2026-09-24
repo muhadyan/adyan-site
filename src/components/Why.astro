@@ -1,0 +1,102 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import type { Copy } from "../content/types";
+import Figures from "./Figures.astro";
+
+interface Props {
+  why: Copy["why"];
+}
+
+const { why } = Astro.props;
+
+// Drop a portrait into src/assets/profile/ and it replaces the monogram.
+const portraits = import.meta.glob<{ default: ImageMetadata }>("../assets/profile/*.{jpg,jpeg,png,webp}", {
+  eager: true,
+});
+const portrait = Object.values(portraits)[0]?.default;
+---
+
+<section class="section" aria-labelledby="why-title">
+  <div class="wrap grid">
+    <div class="portrait">
+      {
+        portrait ? (
+          <Image src={portrait} alt={why.photoAlt} widths={[320, 640]} sizes="320px" loading="lazy" />
+        ) : (
+          <div class="monogram" aria-hidden="true">
+            AR
+          </div>
+        )
+      }
+    </div>
+    <div class="body">
+      <h2 id="why-title">{why.title}</h2>
+      <div class="story">
+        {why.story.map((p) => <p>{p}</p>)}
+      </div>
+      <Figures figures={why.figures} size="lg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 40px;
+  }
+
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: 64px;
+      align-items: start;
+    }
+  }
+
+  .portrait {
+    width: min(45%, 320px);
+  }
+
+  @media (min-width: 900px) {
+    .portrait {
+      width: min(100%, 320px);
+    }
+  }
+
+  .portrait :global(img),
+  .monogram {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    object-fit: cover;
+  }
+
+  .monogram {
+    display: grid;
+    place-items: center;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 27px, var(--rule) 27px 28px),
+      var(--ledger-tint);
+    color: var(--ledger);
+    font-weight: 800;
+    font-size: 4.5rem;
+    font-variation-settings: "wdth" 125;
+    letter-spacing: -0.03em;
+    border: 1px solid var(--rule);
+  }
+
+  h2 {
+    font-size: var(--step-3);
+    max-width: 20ch;
+  }
+
+  .story {
+    display: grid;
+    gap: 16px;
+    margin-block: 24px 40px;
+    max-width: 38rem;
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+</style>

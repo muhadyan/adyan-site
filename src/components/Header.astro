@@ -1,0 +1,124 @@
+---
+import { SITE, waLink } from "../config";
+import type { Copy, Locale } from "../content/types";
+import WaIcon from "./WaIcon.astro";
+
+interface Props {
+  locale: Locale;
+  copy: Copy;
+}
+
+const { locale, copy } = Astro.props;
+const langs: { code: Locale; label: string; href: string }[] = [
+  { code: "id", label: "ID", href: "/" },
+  { code: "en", label: "EN", href: "/en/" },
+];
+---
+
+<a class="skip" href="#main">{copy.nav.skip}</a>
+<header class="header">
+  <div class="wrap header-inner">
+    <a class="name" href={locale === "id" ? "/" : "/en/"}>{SITE.name}</a>
+    <nav class="tools" aria-label={copy.nav.langLabel}>
+      <ul class="langs">
+        {
+          langs.map((lang) => (
+            <li>
+              <a
+                href={lang.href}
+                hreflang={lang.code}
+                lang={lang.code}
+                aria-current={lang.code === locale ? "page" : undefined}
+              >
+                {lang.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="button header-cta" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+        <WaIcon />
+        <span class="header-cta-label">{copy.nav.contact}</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+  }
+
+  .name {
+    color: var(--ink);
+    font-weight: 700;
+    font-variation-settings: "wdth" 118;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .langs {
+    display: flex;
+    gap: 2px;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  .langs a {
+    display: inline-block;
+    min-width: 36px;
+    padding: 8px 6px;
+    color: var(--ink-soft);
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .langs a[aria-current="page"] {
+    color: var(--ink);
+    background: var(--paper-deep);
+  }
+
+  .header-cta {
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 519px) {
+    .header-cta {
+      padding: 8px 11px;
+    }
+
+    .header-cta-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import "../styles/global.css";
+import { SITE } from "../config";
+import type { Copy, Locale } from "../content/types";
+
+interface Props {
+  locale: Locale;
+  copy: Copy;
+  noindex?: boolean;
+}
+
+const { locale, copy, noindex = false } = Astro.props;
+const path = locale === "id" ? "/" : "/en/";
+const canonical = new URL(path, SITE.url).href;
+const ogImage = new URL(`/og-${locale}.png`, SITE.url).href;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{copy.meta.title}</title>
+    <meta name="description" content={copy.meta.description} />
+    <meta name="theme-color" content="#f2f4ef" />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="alternate" hreflang="id" href={new URL("/", SITE.url).href} />
+    <link rel="alternate" hreflang="en" href={new URL("/en/", SITE.url).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/", SITE.url).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={copy.meta.title} />
+    <meta property="og:description" content={copy.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locale === "id" ? "id_ID" : "en_US"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: SITE.name,
+        url: SITE.url,
+        jobTitle: "Backend Engineer",
+        email: `mailto:${SITE.email}`,
+        address: { "@type": "PostalAddress", addressLocality: "Yogyakarta", addressCountry: "ID" },
+        sameAs: [SITE.github, SITE.linkedin],
+      })}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

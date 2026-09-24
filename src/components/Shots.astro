@@ -1,0 +1,150 @@
+---
+import { Image } from "astro:assets";
+import type { Locale } from "../content/types";
+import type { Shot } from "../data/work";
+
+interface Props {
+  shots: Shot[];
+  locale: Locale;
+  eager?: boolean;
+}
+
+// The first desktop shot is shown large. Phone captures sit over its corner in
+// phone frames; the remaining desktop shots form a row of thumbnails.
+const { shots, locale, eager = false } = Astro.props;
+const desktop = shots.filter((s) => !s.phone);
+const phones = shots.filter((s) => s.phone).slice(0, 2);
+const [main, ...rest] = desktop;
+const thumbs = rest.slice(0, 3);
+---
+
+{
+  main && (
+    <div class="shots">
+      <div class:list={["stage", { "has-phones": phones.length > 0 }]}>
+        <figure class="main">
+          <Image
+            src={main.image}
+            alt={main.alt[locale]}
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 900px) 640px, 100vw"
+            loading={eager ? "eager" : "lazy"}
+          />
+        </figure>
+        {phones.length > 0 && (
+          <ul class="phones">
+            {phones.map((shot) => (
+              <li>
+                <Image
+                  src={shot.image}
+                  alt={shot.alt[locale]}
+                  widths={[200, 400]}
+                  sizes="160px"
+                  loading="lazy"
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      {thumbs.length > 0 && (
+        <ul class="thumbs">
+          {thumbs.map((shot) => (
+            <li>
+              <Image
+                src={shot.image}
+                alt={shot.alt[locale]}
+                widths={[240, 480]}
+                sizes="(min-width: 900px) 210px, 33vw"
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .shots {
+    display: grid;
+    gap: 10px;
+  }
+
+  .stage {
+    position: relative;
+  }
+
+  .stage.has-phones {
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 599px) {
+    .phones {
+      bottom: -28px;
+    }
+
+    .stage.has-phones {
+      margin-bottom: 28px;
+    }
+  }
+
+  .main,
+  .thumbs li {
+    overflow: hidden;
+    background: var(--slip);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .main :global(img),
+  .thumbs :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top left;
+  }
+
+  .phones {
+    position: absolute;
+    right: 3%;
+    bottom: -48px;
+    width: 42%;
+    justify-content: flex-end;
+    display: flex;
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Sized against the screenshot, so a phone never hides most of it. */
+  .phones li {
+    width: min(48%, 150px);
+    overflow: hidden;
+    border: 5px solid var(--ink);
+    border-radius: 20px;
+    background: var(--ink);
+    box-shadow: 0 16px 32px rgb(27 36 32 / 0.22);
+  }
+
+  .phones :global(img) {
+    width: 100%;
+    aspect-ratio: 9 / 19.5;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 15px;
+  }
+
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .has-phones + .thumbs {
+    margin-top: 8px;
+  }
+</style>
