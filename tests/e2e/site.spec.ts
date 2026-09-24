@@ -56,3 +56,34 @@ for (const p of PAGES) {
     });
   });
 }
+
+// The main WhatsApp button must be fully visible before any scrolling, on
+// small laptops (1366x768 minus browser chrome) and small phones.
+const FOLD_VIEWPORTS = {
+  desktop: [
+    { width: 1920, height: 950 },
+    { width: 1536, height: 730 },
+    { width: 1470, height: 776 },
+    { width: 1366, height: 650 },
+    { width: 1280, height: 650 },
+    { width: 1024, height: 650 },
+  ],
+  mobile: [
+    { width: 412, height: 780 },
+    { width: 390, height: 664 },
+    { width: 360, height: 640 },
+  ],
+};
+
+for (const p of PAGES) {
+  test(`shows the whole hero WhatsApp button on first open at ${p.path}`, async ({ page }, testInfo) => {
+    for (const viewport of FOLD_VIEWPORTS[testInfo.project.name as keyof typeof FOLD_VIEWPORTS]) {
+      await page.setViewportSize(viewport);
+      await page.goto(p.path);
+      await page.evaluate(() => document.fonts.ready);
+      const box = await page.locator(".hero .cta .button").boundingBox();
+      expect(box, `${viewport.width}x${viewport.height}`).not.toBeNull();
+      expect(box!.y + box!.height, `${viewport.width}x${viewport.height}`).toBeLessThanOrEqual(viewport.height - 12);
+    }
+  });
+}
