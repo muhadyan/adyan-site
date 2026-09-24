@@ -61,19 +61,19 @@ export const WORK: Record<string, Work> = {
         },
       },
       {
-        file: "laris-kasir-mobile",
-        phone: true,
-        alt: {
-          id: "Layar kasir Admos Laris di HP dengan keranjang berisi 5 barang batik",
-          en: "Admos Laris till on a phone with 5 batik items in the cart",
-        },
-      },
-      {
         file: "laris-scan",
         phone: true,
         alt: {
           id: "Scan label QR produk pakai kamera HP di Admos Laris",
           en: "Scanning a product QR label with a phone camera in Admos Laris",
+        },
+      },
+      {
+        file: "laris-kasir-mobile",
+        phone: true,
+        alt: {
+          id: "Layar kasir Admos Laris di HP dengan keranjang berisi 5 barang batik",
+          en: "Admos Laris till on a phone with 5 batik items in the cart",
         },
       },
       {
