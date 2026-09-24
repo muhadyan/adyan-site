@@ -2,9 +2,9 @@ import type { Copy } from "./types";
 
 export const en: Copy = {
   meta: {
-    title: "Adyan Rohutomo | POS, inventory, bookkeeping and ERP systems",
+    title: "Custom POS, Inventory, Bookkeeping & ERP Systems | Adyan Rohutomo",
     description:
-      "I build the systems that run your business: POS, inventory, bookkeeping, invoicing, up to ERP. Former VP of Business Support, 4 years as a backend engineer (including Tokopedia).",
+      "I build the systems that run your business: POS, inventory, bookkeeping, invoicing, up to ERP. Former VP of Business Support, 4 years as a software engineer (including Tokopedia).",
   },
   nav: { skip: "Skip to content", langLabel: "Choose language", contact: "Chat on WhatsApp" },
   wa: { message: "Hi Adyan, I found adyan.admos.id. I’d like to talk about building a system for my business." },
@@ -12,7 +12,7 @@ export const en: Copy = {
     title: "Still running your business on spreadsheets, receipts and chats? I’ll build you the system.",
     lede: "Warehouse stock, POS, bookkeeping, project tracking, company websites, up to ERP. Tidy, works from a phone, and the reports run themselves.",
     proof:
-      "Before engineering, I spent 5+ years in Finance. Last as VP of Business Support, leading the Finance, HR and GA teams. So I know these workflows from the user's side.",
+      "Before becoming a software engineer, I spent 5+ years in Finance. Last as VP of Business Support, leading the Finance, HR and GA teams. So I know these workflows from the user's side.",
     cta: "Free consultation on WhatsApp",
     ctaNote: "Just tell me about it. Free, no commitment.",
     receipt: {
@@ -66,7 +66,7 @@ export const en: Copy = {
       {
         need: "Clients keep asking about project progress",
         build: "A project tracker. Status per stage, automatic client updates, full history.",
-        proof: "10 systems for 10 clients",
+        proof: "11 systems for 11 clients",
       },
       {
         need: "A company or catalog website",
@@ -75,7 +75,7 @@ export const en: Copy = {
       },
       {
         need: "The old system is slow or keeps failing",
-        build: "Audits, bug fixes and backend rebuilds without stopping what already runs.",
+        build: "Audits, bug fixes and rebuilds under the hood without stopping what already runs.",
         proof: "Search Array, 5x faster",
       },
     ],
@@ -133,9 +133,22 @@ export const en: Copy = {
   },
   clients: {
     title: "Clients and employers",
-    intro: "Here I built the backend: the servers, databases and integrations behind the screen.",
+    intro:
+      "For businesses, I handle the whole system, front to back. At tech companies, my part was the backend: the servers, databases and integrations behind the screen.",
     visit: "View the site",
     featured: [
+      {
+        slug: "ummu-alfatih",
+        name: "Ummu Alfatih",
+        role: "Online shop and business systems",
+        period: "2025 to now",
+        summary:
+          "A Muslim womenswear brand from Yogyakarta. I set up their online shop, their books run on Admos Accounting, and their bazaar stand is piloting Admos Laris.",
+        figures: [
+          { value: "3", label: "systems: online shop, books, bazaar till" },
+          { value: "2025 →", label: "still running today" },
+        ],
+      },
       {
         slug: "search-array",
         name: "Search Array",
@@ -197,12 +210,12 @@ export const en: Copy = {
     story: [
       "Before writing code, I spent 5+ years in Finance. I grew into Finance Manager, then VP of Business Support leading the Finance, HR and General Affairs teams.",
       "So when you say “the stock never matches” or “the reports are always late”, I know the feeling. I sat in that chair.",
-      "Now, after 4 years as a backend engineer at Tokopedia and for a dozen clients, I build the systems I wish I had back then.",
+      "Now, after 4 years as a software engineer at Tokopedia and for 11 clients, I build the systems I wish I had back then.",
     ],
     figures: [
       { value: "5+", label: "years in Finance, HR, GA" },
-      { value: "4", label: "years as backend engineer" },
-      { value: "10", label: "systems for 10 clients" },
+      { value: "4", label: "years as a software engineer" },
+      { value: "11", label: "systems for 11 clients" },
       { value: "99.9%", label: "server uptime" },
     ],
     photoAlt: "Photo of Adyan Rohutomo",

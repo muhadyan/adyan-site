@@ -43,6 +43,11 @@ for (const p of PAGES) {
       expect(missing).toEqual([]);
     });
 
+    test("tells search engines Adyan is a software engineer", async ({ page }) => {
+      const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
+      expect(JSON.parse(jsonLd ?? "{}").jobTitle).toBe("Software Engineer");
+    });
+
     test("sets an absolute Open Graph image for link previews", async ({ page }) => {
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
         "content",

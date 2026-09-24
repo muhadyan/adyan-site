@@ -2,9 +2,9 @@ import type { Copy } from "./types";
 
 export const id: Copy = {
   meta: {
-    title: "Adyan Rohutomo | Bikin sistem kasir, stok, pembukuan, dan ERP",
+    title: "Jasa Pembuatan Aplikasi Kasir, Stok, Pembukuan & ERP | Adyan Rohutomo",
     description:
-      "Aku bikin sistem untuk bisnismu: kasir, stok gudang, pembukuan, faktur, sampai ERP. Mantan VP Business Support, 4 tahun engineer backend (termasuk Tokopedia).",
+      "Aku bikin sistem untuk bisnismu: kasir, stok gudang, pembukuan, faktur, sampai ERP. Mantan VP Business Support, 4 tahun jadi software engineer (termasuk Tokopedia).",
   },
   nav: { skip: "Langsung ke isi", langLabel: "Pilih bahasa", contact: "Chat WhatsApp" },
   wa: { message: "Halo Adyan, aku lihat adyan.admos.id. Mau konsultasi bikin sistem untuk bisnisku." },
@@ -12,7 +12,7 @@ export const id: Copy = {
     title: "Bisnismu masih jalan pakai Excel, bon, dan chat? Aku bikinin sistemnya.",
     lede: "Stok gudang, kasir, pembukuan, tracking project, website company, sampai ERP. Rapi, bisa dibuka dari HP, dan laporannya jalan sendiri.",
     proof:
-      "Sebelum jadi engineer, aku 5+ tahun di Finance. Terakhir sebagai VP Business Support yang pegang tim Finance, HR, dan GA. Jadi aku paham alurnya dari sisi yang pakai.",
+      "Sebelum jadi software engineer, aku 5+ tahun di Finance. Terakhir sebagai VP Business Support yang pegang tim Finance, HR, dan GA. Jadi aku paham alurnya dari sisi yang pakai.",
     cta: "Konsultasi gratis via WhatsApp",
     ctaNote: "Cerita dulu aja. Gratis, tanpa komitmen.",
     receipt: {
@@ -66,7 +66,7 @@ export const id: Copy = {
       {
         need: "Klien terus tanya progres project",
         build: "Sistem tracking project. Status per tahap, update otomatis ke klien, riwayat lengkap.",
-        proof: "10 sistem untuk 10 klien",
+        proof: "11 sistem untuk 11 klien",
       },
       {
         need: "Butuh website company atau katalog",
@@ -75,7 +75,7 @@ export const id: Copy = {
       },
       {
         need: "Sistem lama lambat atau sering error",
-        build: "Audit, perbaikan bug, dan rombak backend tanpa mengganggu yang sedang jalan.",
+        build: "Audit, perbaikan bug, dan rombak sistem di balik layar tanpa mengganggu yang sedang jalan.",
         proof: "Search Array, 5x lebih cepat",
       },
     ],
@@ -133,9 +133,22 @@ export const id: Copy = {
   },
   clients: {
     title: "Klien dan tempat kerja",
-    intro: "Di sini aku mengerjakan backend-nya: server, database, dan integrasi di balik layar.",
+    intro:
+      "Untuk bisnis, aku pegang sistemnya dari depan sampai belakang. Di perusahaan teknologi, bagianku backend: server, database, dan integrasi di balik layar.",
     visit: "Lihat situsnya",
     featured: [
+      {
+        slug: "ummu-alfatih",
+        name: "Ummu Alfatih",
+        role: "Toko online dan sistem bisnis",
+        period: "2025 sampai sekarang",
+        summary:
+          "Brand busana muslimah dari Yogyakarta. Aku siapkan toko online-nya, pembukuannya jalan di Admos Accounting, dan kasir bazarnya sedang uji coba Admos Laris.",
+        figures: [
+          { value: "3", label: "sistem: toko online, pembukuan, kasir bazar" },
+          { value: "2025 →", label: "masih jalan sampai sekarang" },
+        ],
+      },
       {
         slug: "search-array",
         name: "Search Array",
@@ -197,12 +210,12 @@ export const id: Copy = {
     story: [
       "Sebelum menulis kode, aku kerja 5+ tahun di Finance. Naik jadi Finance Manager, lalu VP Business Support yang memimpin tim Finance, HR, dan General Affairs.",
       "Jadi waktu kamu bilang “stok nggak cocok” atau “laporan telat terus”, aku tahu rasanya. Aku pernah di kursi itu.",
-      "Sekarang, setelah 4 tahun jadi engineer backend di Tokopedia dan untuk belasan klien, aku bikin sistem yang dulu aku pengen punya.",
+      "Sekarang, setelah 4 tahun jadi software engineer di Tokopedia dan untuk 11 klien, aku bikin sistem yang dulu aku pengen punya.",
     ],
     figures: [
       { value: "5+", label: "tahun di Finance, HR, GA" },
-      { value: "4", label: "tahun engineer backend" },
-      { value: "10", label: "sistem untuk 10 klien" },
+      { value: "4", label: "tahun jadi software engineer" },
+      { value: "11", label: "sistem untuk 11 klien" },
       { value: "99,9%", label: "uptime server" },
     ],
     photoAlt: "Foto Adyan Rohutomo",
