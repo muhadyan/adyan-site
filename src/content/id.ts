@@ -36,7 +36,7 @@ export const id: Copy = {
   needs: {
     title: "Masalahmu, sistemnya, buktinya",
     intro: "Ini kebutuhan yang paling sering aku temui. Tiap baris sudah pernah aku kerjakan.",
-    columns: { need: "Kalau kamu bilang", build: "Aku bikin", proof: "Sudah pernah di" },
+    columns: { need: "Masalahmu", build: "Aku bikinkan", proof: "Buktinya" },
     rows: [
       {
         need: "Penjualan masih dicatat di bon",

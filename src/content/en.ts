@@ -36,7 +36,7 @@ export const en: Copy = {
   needs: {
     title: "Your problem, the system, the proof",
     intro: "These are the needs I hear most often. I have already built every row.",
-    columns: { need: "When you say", build: "I build", proof: "Done before at" },
+    columns: { need: "Your problem", build: "What I build", proof: "Proof" },
     rows: [
       {
         need: "Sales still go on paper receipts",

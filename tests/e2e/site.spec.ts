@@ -36,6 +36,24 @@ for (const p of PAGES) {
       expect(overflow).toBeLessThanOrEqual(0);
     });
 
+    // On phones the needs table stacks and its header row is hidden, so each
+    // part of a row carries its own label, worded like the column header.
+    test("labels each part of a needs row on phones", async ({ page }, testInfo) => {
+      const section = page.locator('section[aria-labelledby="needs-title"]');
+      const headers = await section.locator("thead th").allTextContents();
+      const labels = section.locator("tbody tr").first().locator(".cell-label");
+      if (testInfo.project.name === "mobile") {
+        await expect(labels).toHaveCount(headers.length);
+        for (const [i, header] of headers.entries()) {
+          await expect(labels.nth(i)).toBeVisible();
+          expect((await labels.nth(i).textContent())?.replace(":", "").trim()).toBe(header.trim());
+        }
+      } else {
+        await expect(section.locator("thead")).toBeVisible();
+        for (const label of await labels.all()) await expect(label).toBeHidden();
+      }
+    });
+
     test("gives every image alt text", async ({ page }) => {
       const missing = await page.locator("img").evaluateAll((imgs) =>
         imgs.filter((img) => !img.getAttribute("alt")?.trim()).map((img) => img.getAttribute("src")),
