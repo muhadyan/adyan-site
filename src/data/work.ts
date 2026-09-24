@@ -38,6 +38,22 @@ export const WORK: Record<string, Work> = {
         },
       },
       {
+        file: "admos-dashboard-mobile",
+        phone: true,
+        alt: {
+          id: "Dasbor Admos Accounting di HP: tombol pintas Dari Foto dan Penjualan, lalu pendapatan dan pengeluaran bulan ini",
+          en: "Admos Accounting dashboard on a phone: From Photo and Sales shortcuts, then this month's income and expenses",
+        },
+      },
+      {
+        file: "admos-foto-nota-mobile",
+        phone: true,
+        alt: {
+          id: "Draf jurnal dari foto nota toko bangunan di HP, debit dan kredit sudah seimbang Rp 706.000",
+          en: "Journal draft from a photo of a hardware-store receipt on a phone, debit and credit balanced at Rp 706,000",
+        },
+      },
+      {
         file: "admos-laba-rugi",
         alt: {
           id: "Laporan laba rugi Admos Accounting yang tersusun otomatis dari jurnal",
@@ -91,6 +107,22 @@ export const WORK: Record<string, Work> = {
       {
         file: "ringkasaja-orders",
         alt: { id: "Daftar order di RingkasAja dengan status tiap paket", en: "RingkasAja order list with each parcel's status" },
+      },
+      {
+        file: "ringkasaja-orders-mobile",
+        phone: true,
+        alt: {
+          id: "Daftar order RingkasAja di HP: status Siap Kirim, Menunggu Bayar, dan Selesai",
+          en: "RingkasAja order list on a phone: Ready to Ship, Awaiting Payment and Done statuses",
+        },
+      },
+      {
+        file: "ringkasaja-order-detail-mobile",
+        phone: true,
+        alt: {
+          id: "Detail order RingkasAja di HP: barang, ongkir, total, dan nomor resi",
+          en: "RingkasAja order detail on a phone: items, shipping, total and waybill number",
+        },
       },
       {
         file: "ringkasaja-new-order",
