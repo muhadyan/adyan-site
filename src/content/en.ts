@@ -4,7 +4,7 @@ export const en: Copy = {
   meta: {
     title: "Custom POS, Inventory, Bookkeeping & ERP Systems | Adyan Rohutomo",
     description:
-      "I build the systems that run your business: POS, inventory, bookkeeping, invoicing, up to ERP. Former VP of Business Support, 4 years as a software engineer (including Tokopedia).",
+      "I build the systems that run your business: POS, inventory, bookkeeping, invoicing, up to ERP. Former VP of Business, 4 years as a software engineer (including Tokopedia).",
   },
   nav: { skip: "Skip to content", langLabel: "Choose language", contact: "Chat on WhatsApp" },
   wa: { message: "Hi Adyan, I found adyan.admos.id. I’d like to talk about building a system for my business." },
@@ -12,7 +12,7 @@ export const en: Copy = {
     title: "Still running your business on spreadsheets, receipts and chats? I’ll build you the system.",
     lede: "Warehouse stock, POS, bookkeeping, project tracking, company websites, up to ERP. Tidy, works from a phone, and the reports run themselves.",
     proof:
-      "Before becoming a software engineer, I spent 5+ years in Finance. Last as VP of Business Support, leading the Finance, HR and GA teams. So I know these workflows from the user's side.",
+      "Before becoming a software engineer, I spent 5+ years in Finance. Last as VP of Business, leading the Finance, HR and GA teams. So I know these workflows from the user's side.",
     cta: "Free consultation on WhatsApp",
     ctaNote: "Just tell me about it. Free, no commitment.",
     receipt: {
@@ -208,7 +208,7 @@ export const en: Copy = {
   why: {
     title: "I used to be the one using these systems",
     story: [
-      "Before writing code, I spent 5+ years in Finance. I grew into Finance Manager, then VP of Business Support leading the Finance, HR and General Affairs teams.",
+      "Before writing code, I spent 5+ years in Finance. I grew into Finance Manager, then VP of Business leading the Finance, HR and General Affairs teams.",
       "So when you say “the stock never matches” or “the reports are always late”, I know the feeling. I sat in that chair.",
       "Now, after 4 years as a software engineer at Tokopedia and for 11 clients, I build the systems I wish I had back then.",
     ],
