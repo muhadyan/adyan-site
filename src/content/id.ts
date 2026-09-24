@@ -4,7 +4,7 @@ export const id: Copy = {
   meta: {
     title: "Jasa Pembuatan Aplikasi Kasir, Stok, Pembukuan & ERP | Adyan Rohutomo",
     description:
-      "Aku bikin sistem untuk bisnismu: kasir, stok gudang, pembukuan, faktur, sampai ERP. Mantan VP Business Support, 4 tahun jadi software engineer (termasuk Tokopedia).",
+      "Aku bikin sistem untuk bisnismu: kasir, stok gudang, pembukuan, faktur, sampai ERP. Mantan VP Business, 4 tahun jadi software engineer (termasuk Tokopedia).",
   },
   nav: { skip: "Langsung ke isi", langLabel: "Pilih bahasa", contact: "Chat WhatsApp" },
   wa: { message: "Halo Adyan, aku lihat adyan.admos.id. Mau konsultasi bikin sistem untuk bisnisku." },
@@ -12,7 +12,7 @@ export const id: Copy = {
     title: "Bisnismu masih jalan pakai Excel, bon, dan chat? Aku bikinin sistemnya.",
     lede: "Stok gudang, kasir, pembukuan, tracking project, website company, sampai ERP. Rapi, bisa dibuka dari HP, dan laporannya jalan sendiri.",
     proof:
-      "Sebelum jadi software engineer, aku 5+ tahun di Finance. Terakhir sebagai VP Business Support yang pegang tim Finance, HR, dan GA. Jadi aku paham alurnya dari sisi yang pakai.",
+      "Sebelum jadi software engineer, aku 5+ tahun di Finance. Terakhir sebagai VP Business yang pegang tim Finance, HR, dan GA. Jadi aku paham alurnya dari sisi yang pakai.",
     cta: "Konsultasi gratis via WhatsApp",
     ctaNote: "Cerita dulu aja. Gratis, tanpa komitmen.",
     receipt: {
@@ -208,7 +208,7 @@ export const id: Copy = {
   why: {
     title: "Dulu aku yang pakai sistemnya",
     story: [
-      "Sebelum menulis kode, aku kerja 5+ tahun di Finance. Naik jadi Finance Manager, lalu VP Business Support yang memimpin tim Finance, HR, dan General Affairs.",
+      "Sebelum menulis kode, aku kerja 5+ tahun di Finance. Naik jadi Finance Manager, lalu VP Business yang memimpin tim Finance, HR, dan General Affairs.",
       "Jadi waktu kamu bilang “stok nggak cocok” atau “laporan telat terus”, aku tahu rasanya. Aku pernah di kursi itu.",
       "Sekarang, setelah 4 tahun jadi software engineer di Tokopedia dan untuk 11 klien, aku bikin sistem yang dulu aku pengen punya.",
     ],
