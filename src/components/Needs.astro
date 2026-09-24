@@ -26,9 +26,33 @@ const { needs } = Astro.props;
         {
           needs.rows.map((row) => (
             <tr>
-              <th scope="row">{row.need}</th>
-              <td>{row.build}</td>
-              <td class="proof">{row.proof}</td>
+              {/* Labels repeat the (hidden) column headers once the table stacks on phones.
+                  aria-hidden: screen readers already announce the real headers. */}
+              <th scope="row">
+                <span class="cell-label" aria-hidden="true">
+                  {needs.columns.need}
+                </span>
+                <q>{row.need}</q>
+              </th>
+              <td>
+                <span class="cell-label" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14" />
+                    <path d="m19 12-7 7-7-7" />
+                  </svg>
+                  {needs.columns.build}
+                </span>
+                {row.build}
+              </td>
+              <td class="proof">
+                <span class="cell-label" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  {needs.columns.proof}:
+                </span>
+                {row.proof}
+              </td>
             </tr>
           ))
         }
@@ -74,11 +98,16 @@ const { needs } = Astro.props;
     color: var(--ink-soft);
   }
 
-  .proof {
+  /* "tbody" outranks the scoped `tbody td` rules. */
+  tbody .proof {
     width: 22%;
     color: var(--ledger);
     font-family: var(--font-mono);
     font-size: 0.8125rem;
+  }
+
+  .cell-label {
+    display: none;
   }
 
   @media (max-width: 759px) {
@@ -92,8 +121,7 @@ const { needs } = Astro.props;
 
     tbody tr {
       display: grid;
-      gap: 6px;
-      padding: 18px 16px;
+      padding: 20px 0 22px 16px;
       border-bottom: 1px solid var(--rule);
     }
 
@@ -102,6 +130,50 @@ const { needs } = Astro.props;
       width: auto;
       padding: 0;
       border: 0;
+    }
+
+    tbody td {
+      margin-top: 14px;
+    }
+
+    /* Small and quiet, so a quick scan still lands on the problem first. */
+    .cell-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      color: var(--ink-soft);
+      font-family: var(--font-sans);
+      font-size: var(--step--1);
+      font-weight: 600;
+      font-variation-settings: "wdth" 100;
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+    }
+
+    tbody .proof {
+      justify-self: start;
+      display: block;
+      width: auto;
+      margin-top: 12px;
+      padding: 7px 10px;
+      background: var(--ledger-tint);
+      color: var(--ledger-deep);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+
+    /* Inline, so a long proof wraps right after the label, not below it. */
+    .proof .cell-label {
+      display: inline-flex;
+      margin: 0 6px 0 0;
+      vertical-align: -2px;
+      color: inherit;
+      font-weight: 400;
+      font-size: 0.8125rem;
+      letter-spacing: 0;
     }
   }
 </style>
