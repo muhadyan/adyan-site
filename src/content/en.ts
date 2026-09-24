@@ -9,8 +9,8 @@ export const en: Copy = {
   nav: { skip: "Skip to content", langLabel: "Choose language", contact: "Chat on WhatsApp" },
   wa: { message: "Hi Adyan, I found adyan.admos.id. I’d like to talk about building a system for my business." },
   hero: {
-    title: "Still running your shop on paper receipts? I’ll build you the system.",
-    lede: "POS, warehouse stock, bookkeeping, invoices, up to ERP. Tidy, works from a phone, and the reports run themselves.",
+    title: "Still running your business on spreadsheets, receipts and chats? I’ll build you the system.",
+    lede: "Warehouse stock, POS, bookkeeping, project tracking, company websites, up to ERP. Tidy, works from a phone, and the reports run themselves.",
     proof:
       "Before engineering, I spent 5+ years in Finance. Last as VP of Business Support, leading the Finance, HR and GA teams. So I know these workflows from the user's side.",
     cta: "Free consultation on WhatsApp",
@@ -18,14 +18,14 @@ export const en: Copy = {
     receipt: {
       heading: "Order slip",
       number: "No. 0001",
-      to: "For: your shop",
+      to: "For: your business",
       lines: [
         "Sales recorded automatically",
         "Real-time stock + barcode labels",
-        "Low-stock reminders",
         "Invoices, returns, voids",
-        "Income & expenses",
         "Automatic financial reports",
+        "Project tracking + client updates",
+        "Company / catalog website",
       ],
       totalLabel: "Total",
       total: "Fits your budget",

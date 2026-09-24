@@ -9,8 +9,8 @@ export const id: Copy = {
   nav: { skip: "Langsung ke isi", langLabel: "Pilih bahasa", contact: "Chat WhatsApp" },
   wa: { message: "Halo Adyan, aku lihat adyan.admos.id. Mau konsultasi bikin sistem untuk bisnisku." },
   hero: {
-    title: "Toko kamu masih pakai bon? Aku bikinin sistemnya.",
-    lede: "Kasir, stok gudang, pembukuan, faktur, sampai ERP. Rapi, bisa dibuka dari HP, dan laporannya jalan sendiri.",
+    title: "Bisnismu masih jalan pakai Excel, bon, dan chat? Aku bikinin sistemnya.",
+    lede: "Stok gudang, kasir, pembukuan, tracking project, website company, sampai ERP. Rapi, bisa dibuka dari HP, dan laporannya jalan sendiri.",
     proof:
       "Sebelum jadi engineer, aku 5+ tahun di Finance. Terakhir sebagai VP Business Support yang pegang tim Finance, HR, dan GA. Jadi aku paham alurnya dari sisi yang pakai.",
     cta: "Konsultasi gratis via WhatsApp",
@@ -18,14 +18,14 @@ export const id: Copy = {
     receipt: {
       heading: "Nota pesanan",
       number: "No. 0001",
-      to: "Untuk: tokomu",
+      to: "Untuk: bisnismu",
       lines: [
         "Penjualan tercatat otomatis",
         "Stok real-time + print barcode",
-        "Pengingat stok menipis",
         "Faktur, retur, pembatalan",
-        "Pemasukan & pengeluaran",
         "Laporan keuangan otomatis",
+        "Tracking project + update ke klien",
+        "Website company / katalog",
       ],
       totalLabel: "Total",
       total: "Budget menyesuaikan",
