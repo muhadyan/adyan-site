@@ -44,6 +44,9 @@ for (const p of PAGES) {
       const labels = section.locator("tbody tr").first().locator(".cell-label");
       if (testInfo.project.name === "mobile") {
         await expect(labels).toHaveCount(headers.length);
+        // Guards the proof tag style against losing to the scoped table resets.
+        const proofBg = await section.locator("tbody .proof").first().evaluate((el) => getComputedStyle(el).backgroundColor);
+        expect(proofBg).not.toBe("rgba(0, 0, 0, 0)");
         for (const [i, header] of headers.entries()) {
           await expect(labels.nth(i)).toBeVisible();
           expect((await labels.nth(i).textContent())?.replace(":", "").trim()).toBe(header.trim());
