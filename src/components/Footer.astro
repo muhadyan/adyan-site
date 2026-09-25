@@ -73,7 +73,14 @@ const { footer } = copy;
     color: var(--ledger-deep);
   }
 
-  .button:hover {
+  @media (hover: hover) and (pointer: fine) {
+    .button:hover {
+      background: var(--ledger-tint);
+      color: var(--ledger-deep);
+    }
+  }
+
+  .button:active {
     background: var(--ledger-tint);
     color: var(--ledger-deep);
   }

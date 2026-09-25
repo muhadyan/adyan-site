@@ -29,6 +29,24 @@ const { receipt } = Astro.props;
     <p class="stamp" aria-hidden="true">{receipt.stamp}</p>
   </div>
 </figure>
+<script is:inline>
+  // On phones the slip opens below the fold: hold the print until it scrolls into view.
+  // Without JS the attribute is never set and the print plays on load.
+  (() => {
+    const slip = document.currentScript.previousElementSibling;
+    if (!("IntersectionObserver" in window)) return;
+    slip.setAttribute("data-wait", "");
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        slip.removeAttribute("data-wait");
+        io.disconnect();
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(slip);
+  })();
+</script>
 
 <style>
   .slip {
@@ -147,10 +165,25 @@ const { receipt } = Astro.props;
     }
   }
 
+  .slip[data-wait] .paper,
+  .slip[data-wait] .stamp {
+    animation-play-state: paused;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* Gentler, not gone: the slip fades in without moving. */
   @media (prefers-reduced-motion: reduce) {
-    .paper,
+    .paper {
+      animation: fade 240ms var(--ease-out) both;
+    }
+
     .stamp {
-      animation: none;
+      animation: fade 240ms 240ms var(--ease-out) both;
     }
   }
 </style>

@@ -55,6 +55,10 @@ const personJsonLd = JSON.stringify({
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={personJsonLd} />
+    <!-- iOS Safari applies :active (the press feedback) only while a touch listener exists. -->
+    <script is:inline>
+      document.addEventListener("touchstart", () => {}, { passive: true });
+    </script>
     <!-- Umami: cookie-free visit counts. data-domains keeps localhost and preview deploys out. -->
     <script
       is:inline
