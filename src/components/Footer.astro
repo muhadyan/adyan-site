@@ -16,7 +16,14 @@ const { footer } = copy;
     <div class="cta">
       <h2>{footer.title}</h2>
       <p>{footer.body}</p>
-      <a class="button" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+      <a
+        class="button"
+        href={waLink(copy.wa.message)}
+        rel="noopener"
+        target="_blank"
+        data-umami-event="wa-click"
+        data-umami-event-spot="footer"
+      >
         <WaIcon />
         {footer.cta}
       </a>
@@ -29,7 +36,7 @@ const { footer } = copy;
       <ul>
         <li><a href={SITE.github} rel="noopener" target="_blank">{footer.github}</a></li>
         <li><a href={SITE.linkedin} rel="noopener" target="_blank">{footer.linkedin}</a></li>
-        <li><a href={SITE.cv} download>{footer.cv}</a></li>
+        <li><a href={SITE.cv} download target="_blank" data-umami-event="cv-download">{footer.cv}</a></li>
       </ul>
     </div>
   </div>

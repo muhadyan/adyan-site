@@ -36,7 +36,14 @@ const langs: { code: Locale; label: string; href: string }[] = [
           ))
         }
       </ul>
-      <a class="button header-cta" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+      <a
+        class="button header-cta"
+        href={waLink(copy.wa.message)}
+        rel="noopener"
+        target="_blank"
+        data-umami-event="wa-click"
+        data-umami-event-spot="header"
+      >
         <WaIcon />
         <span class="header-cta-label">{copy.nav.contact}</span>
       </a>
