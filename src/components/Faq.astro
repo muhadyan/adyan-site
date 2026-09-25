@@ -58,6 +58,12 @@ const { faq } = Astro.props;
     font-size: var(--step-1);
     cursor: pointer;
     list-style: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  summary:active {
+    color: var(--ledger-deep);
   }
 
   summary::-webkit-details-marker {
@@ -69,7 +75,7 @@ const { faq } = Astro.props;
     flex: none;
     color: var(--ledger);
     font-family: var(--font-mono);
-    transition: rotate 160ms ease;
+    transition: rotate 200ms var(--ease-out);
   }
 
   details[open] summary::after {
@@ -82,9 +88,31 @@ const { faq } = Astro.props;
     color: var(--ink-soft);
   }
 
+  /* The answer settles in under its question instead of popping in. Closing stays instant. */
+  details[open] p {
+    animation: answer 200ms var(--ease-out) both;
+  }
+
+  @keyframes answer {
+    from {
+      opacity: 0;
+      translate: 0 -4px;
+    }
+  }
+
+  @keyframes answer-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     summary::after {
       transition: none;
+    }
+
+    details[open] p {
+      animation-name: answer-fade;
     }
   }
 </style>
