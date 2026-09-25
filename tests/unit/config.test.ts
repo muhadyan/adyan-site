@@ -18,6 +18,10 @@ describe("SITE", () => {
     expect(SITE.whatsapp).toMatch(/^62\d{8,13}$/);
   });
 
+  it("has an Umami website ID", () => {
+    expect(SITE.umamiId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  });
+
   it("links only to https profiles", () => {
     for (const url of [SITE.github, SITE.linkedin, SITE.url]) {
       expect(url).toMatch(/^https:\/\//);

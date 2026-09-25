@@ -55,6 +55,14 @@ const personJsonLd = JSON.stringify({
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={personJsonLd} />
+    <!-- Umami: cookie-free visit counts. data-domains keeps localhost and preview deploys out. -->
+    <script
+      is:inline
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id={SITE.umamiId}
+      data-domains="adyan.admos.id"
+    ></script>
   </head>
   <body>
     <slot />

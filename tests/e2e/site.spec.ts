@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { SITE } from "../../src/config";
 
 const PAGES = [
   { path: "/", lang: "id", toggle: "EN", other: "/en/" },
@@ -22,6 +23,32 @@ for (const p of PAGES) {
       for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href")))) {
         expect(href).toMatch(/^https:\/\/wa\.me\/6285717913273\?text=.+/);
       }
+    });
+
+    test("loads the Umami tracker for the live domain only", async ({ page }) => {
+      const tracker = page.locator('script[src="https://cloud.umami.is/script.js"]');
+      await expect(tracker).toHaveAttribute("data-website-id", SITE.umamiId);
+      await expect(tracker).toHaveAttribute("data-domains", "adyan.admos.id");
+    });
+
+    test("tracks every WhatsApp button click with its spot", async ({ page }) => {
+      const spots = await page
+        .locator('a[href^="https://wa.me/"]')
+        .evaluateAll((els) => els.map((e) => [e.getAttribute("data-umami-event"), e.getAttribute("data-umami-event-spot")]));
+      expect(spots).toEqual([
+        ["wa-click", "header"],
+        ["wa-click", "hero"],
+        ["wa-click", "footer"],
+      ]);
+    });
+
+    // Umami sends same-tab links with location.href, which drops "download",
+    // so the CV link opens in a new tab to keep the download working.
+    test("tracks CV downloads without breaking the download", async ({ page }) => {
+      const cv = page.locator(`a[href="${SITE.cv}"]`);
+      await expect(cv).toHaveAttribute("data-umami-event", "cv-download");
+      await expect(cv).toHaveAttribute("target", "_blank");
+      await expect(cv).toHaveAttribute("download", "");
     });
 
     test("switches language with the toggle", async ({ page }) => {

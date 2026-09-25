@@ -18,7 +18,14 @@ const { hero } = copy;
     <p class="lede">{hero.lede}</p>
     <p class="proof">{hero.proof}</p>
     <div class="cta">
-      <a class="button" href={waLink(copy.wa.message)} rel="noopener" target="_blank">
+      <a
+        class="button"
+        href={waLink(copy.wa.message)}
+        rel="noopener"
+        target="_blank"
+        data-umami-event="wa-click"
+        data-umami-event-spot="hero"
+      >
         <WaIcon />
         {hero.cta}
       </a>

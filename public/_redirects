@@ -1,0 +1,6 @@
+# Short tag links for Threads. Each adds UTM tags so Umami shows the source.
+# The "." rows catch a link that swallows the full stop after it.
+/p   /?utm_source=threads&utm_medium=pitch  302
+/p.  /?utm_source=threads&utm_medium=pitch  302
+/b   /?utm_source=threads&utm_medium=bio    302
+/b.  /?utm_source=threads&utm_medium=bio    302
