@@ -1,0 +1,80 @@
+---
+// Privacy policy for the small tools Adyan runs for himself. Google's OAuth consent
+// screen for the "social-runner mail" app links here, so keep the Gmail section true.
+import "../styles/global.css";
+import { SITE } from "../config";
+
+const updated = "1 October 2026";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy | {SITE.name}</title>
+    <meta name="description" content={`Privacy policy for ${SITE.url} and the tools ${SITE.name} runs.`} />
+    <meta name="theme-color" content="#f2f4ef" />
+    <link rel="canonical" href={new URL("/privacy/", SITE.url).href} />
+  </head>
+  <body>
+    <main class="privacy">
+      <p><a href="/">← {SITE.url.replace("https://", "")}</a></p>
+      <h1>Privacy Policy</h1>
+      <p class="muted">Last updated: {updated}</p>
+
+      <h2>Who this is</h2>
+      <p>
+        This site and the tools below are run by {SITE.name}, a software engineer in Yogyakarta, Indonesia.
+        Contact: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>This website</h2>
+      <p>
+        The site counts visits with Umami, a cookie-free analytics tool. It records the page, the referring
+        site and the rough country, never your name or contact details. Messages you send through WhatsApp or
+        email reach me directly and are used only to answer you.
+      </p>
+
+      <h2>"social-runner mail" (Google OAuth app)</h2>
+      <p>
+        This is a private tool used only by me, on my own Google account. It asks for one permission,
+        <code>gmail.send</code>, so my own server can send emails I wrote from my Gmail address.
+      </p>
+      <ul>
+        <li>It cannot read, list, search or delete any email.</li>
+        <li>It never accesses anyone else's Google account.</li>
+        <li>The access token is stored only on my own server, readable by my account alone.</li>
+        <li>Data from Google APIs is not sold, shared, or used for ads or to train AI models.</li>
+      </ul>
+      <p>
+        Its use of information received from Google APIs follows the
+        <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+        including the Limited Use requirements. You can revoke its access at any time at
+        <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.
+      </p>
+
+      <h2>People I email</h2>
+      <p>
+        If I contact you about a project, I keep your public handle, the address you published and the date, so I never
+        contact you twice. Ask me at <a href={`mailto:${SITE.email}`}>{SITE.email}</a> and I will delete it.
+      </p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .privacy {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 4rem;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .privacy h1 { font-size: 2rem; margin: 1rem 0 0.25rem; }
+  .privacy h2 { font-size: 1.15rem; margin: 2rem 0 0.5rem; }
+  .privacy a { color: var(--ledger); }
+  .privacy code { font-family: var(--font-mono); font-size: 0.9em; }
+  .muted { color: var(--ink-soft); }
+</style>

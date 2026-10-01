@@ -135,3 +135,11 @@ for (const p of PAGES) {
     }
   });
 }
+
+// Google's OAuth consent screen links here (Gmail send-only app for pitch emails).
+test("privacy page explains the email tool and names a contact", async ({ page }) => {
+  await page.goto("/privacy/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Privacy/i);
+  await expect(page.getByText(/gmail\.send/)).toBeVisible();
+  await expect(page.locator(`a[href="mailto:${SITE.email}"]`).first()).toBeVisible();
+});
