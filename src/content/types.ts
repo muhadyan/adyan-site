@@ -63,5 +63,16 @@ export type Copy = {
   why: { title: string; story: string[]; figures: Figure[]; photoAlt: string };
   process: { title: string; steps: { title: string; body: string }[] };
   faq: { title: string; items: { q: string; a: string }[] };
-  footer: { title: string; body: string; cta: string; email: string; cv: string; github: string; linkedin: string };
+  footer: {
+    title: string;
+    body: string;
+    cta: string;
+    email: string;
+    visit: string;
+    hours: string;
+    map: string;
+    cv: string;
+    github: string;
+    linkedin: string;
+  };
 };

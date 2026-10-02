@@ -91,9 +91,19 @@ for (const p of PAGES) {
       expect(missing).toEqual([]);
     });
 
-    test("tells search engines Adyan is a software engineer", async ({ page }) => {
+    test("tells search engines Adyan is a software engineer behind Admos ERP", async ({ page }) => {
       const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
-      expect(JSON.parse(jsonLd ?? "{}").jobTitle).toBe("Software Engineer");
+      const nodes: Array<Record<string, unknown>> = JSON.parse(jsonLd ?? "{}")["@graph"] ?? [];
+      expect(nodes.find((n) => n["@type"] === "Person")?.jobTitle).toBe("Software Engineer");
+      expect(nodes.find((n) => n["@type"] === "ProfessionalService")?.name).toBe("Admos ERP");
+    });
+
+    test("shows the Maps listing name, address and phone in the footer", async ({ page }) => {
+      const address = page.locator("footer address");
+      await expect(address).toContainText("Admos ERP");
+      await expect(address).toContainText("Maguwoharjo");
+      await expect(address.locator('a[href^="tel:+62"]')).toBeVisible();
+      await expect(page.locator("footer iframe")).toHaveAttribute("src", /google\.com\/maps.*output=embed/);
     });
 
     test("sets an absolute Open Graph image for link previews", async ({ page }) => {
