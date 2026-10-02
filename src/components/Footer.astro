@@ -1,5 +1,6 @@
 ---
 import { SITE, waLink } from "../config";
+import { BUSINESS, addressLine, mapEmbedUrl } from "../data/business";
 import type { Copy } from "../content/types";
 import WaIcon from "./WaIcon.astro";
 
@@ -31,6 +32,22 @@ const { footer } = copy;
         {footer.email}: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </p>
     </div>
+    <div class="visit">
+      <address>
+        <strong>{BUSINESS.name}</strong>
+        <span>{footer.visit}</span>
+        <span>{addressLine()}</span>
+        <span>{footer.hours}</span>
+        <a class="tel num" href={`tel:+${SITE.whatsapp}`}>{BUSINESS.phoneDisplay}</a>
+      </address>
+      <iframe
+        class="map"
+        src={mapEmbedUrl()}
+        title={footer.map}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
     <div class="base">
       <p>© {new Date().getFullYear()} {SITE.name}, Yogyakarta</p>
       <ul>
@@ -52,7 +69,7 @@ const { footer } = copy;
     display: grid;
     gap: 16px;
     justify-items: start;
-    padding-block: clamp(72px, 10vw, 120px);
+    padding-block: clamp(72px, 10vw, 120px) clamp(48px, 6vw, 72px);
   }
 
   h2 {
@@ -95,6 +112,70 @@ const { footer } = copy;
 
   a:focus-visible {
     outline-color: #fff;
+  }
+
+  /* Visit row: a quiet ledger entry between the CTA and the base row, not a second CTA. */
+  .visit {
+    display: grid;
+    gap: 24px;
+    padding-block: 32px 48px;
+    border-top: 1px solid rgb(255 255 255 / 0.25);
+  }
+
+  @media (min-width: 720px) {
+    .visit {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 480px);
+      justify-content: space-between;
+      gap: 40px;
+    }
+  }
+
+  address {
+    display: grid;
+    align-content: start;
+    justify-items: start;
+    gap: 4px;
+    font-style: normal;
+    color: var(--ledger-tint);
+  }
+
+  address strong {
+    color: #fff;
+    font-size: var(--step-1);
+    line-height: 1.3;
+  }
+
+  /* The visit note belongs to the name; the facts below it start a new group. */
+  address span:not(:first-of-type) {
+    color: #fff;
+  }
+
+  address span:nth-of-type(2) {
+    margin-top: 12px;
+    max-width: 36ch;
+  }
+
+  .tel {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: var(--step-0);
+  }
+
+  .map {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: var(--radius);
+    /* Shown until the lazy map paints, so the row never flashes white. */
+    background: var(--ledger-deep);
+  }
+
+  @media (min-width: 720px) {
+    .map {
+      aspect-ratio: 16 / 10;
+    }
   }
 
   .base {

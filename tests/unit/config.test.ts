@@ -22,6 +22,10 @@ describe("SITE", () => {
     expect(SITE.umamiId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
   });
 
+  it("has a Google Search Console verification token", () => {
+    expect(SITE.googleSiteVerification).toMatch(/^[\w-]{43}$/);
+  });
+
   it("links only to https profiles", () => {
     for (const url of [SITE.github, SITE.linkedin, SITE.url]) {
       expect(url).toMatch(/^https:\/\//);
