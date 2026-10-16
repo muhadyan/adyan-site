@@ -44,6 +44,10 @@ trap cleanup EXIT
 
 grep -q '^OPENROUTER_API_KEY=.' "$ACC_BE_DIR/.env" 2>/dev/null ||
   echo "WARN: no OPENROUTER_API_KEY in $ACC_BE_DIR/.env, Catat dari Foto stays off" >&2
+# These paths are written into env files the hub sources as shell: refuse quotes and expansions.
+case "$ACC_BE_DIR$RUN_DIR" in
+  *[\'\"\$\`\\]*) echo "refusing a path with quotes, \$, \` or \\: $ACC_BE_DIR $RUN_DIR" >&2; exit 1 ;;
+esac
 mkdir -p "$RUN_DIR/objects"
 
 write_env accounting-api "CATAT_ENABLED=true

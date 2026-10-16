@@ -63,8 +63,8 @@ export const WORK: Record<string, Work> = {
       {
         file: "admos-jurnal",
         alt: {
-          id: "Jurnal umum di menu Untuk akuntan, dengan penjualan dan biaya dari Laris yang tercatat otomatis",
-          en: "General journal under the Untuk akuntan (for accountants) menu, with Laris sales and fees recorded automatically",
+          id: "Jurnal umum di menu Untuk akuntan, dengan penjualan dari Laris yang tercatat otomatis",
+          en: "General journal under the Untuk akuntan (for accountants) menu, with Laris sales recorded automatically",
         },
       },
     ]),

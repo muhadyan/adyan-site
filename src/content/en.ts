@@ -45,7 +45,7 @@ export const en: Copy = {
       },
       {
         need: "Warehouse stock never matches",
-        build: "Stock per product that drops when an order is paid and never blocks a sale, a QR label for every variant, stock history per product.",
+        build: "Stock per product that drops when an order is paid and never blocks a sale, a QR label for every variant.",
         proof: "Admos Laris",
       },
       {
