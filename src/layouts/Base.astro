@@ -59,6 +59,17 @@ const jsonLd = siteJsonLd();
       data-website-id={SITE.umamiId}
       data-domains="adyan.admos.id"
     ></script>
+    <!-- Keeps a pitch link's code for the visit and adds it to every tracked click. -->
+    <script>
+      import { rememberPitchCode, tagClicks } from "../lib/pitchCode";
+      let store: Storage | null = null;
+      try {
+        store = window.sessionStorage;
+      } catch {
+        store = null;
+      }
+      tagClicks(document, rememberPitchCode(location.search, store));
+    </script>
   </head>
   <body>
     <slot />
