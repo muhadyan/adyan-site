@@ -33,36 +33,39 @@ export const WORK: Record<string, Work> = {
       {
         file: "admos-dashboard",
         alt: {
-          id: "Dasbor Admos Accounting: pendapatan, pengeluaran, dan laba bersih bulan ini dengan grafik 6 bulan",
-          en: "Admos Accounting dashboard: this month's income, expenses and net profit with a 6-month chart",
+          id: "Beranda Admos Accounting: untung bulan ini, pendapatan, pengeluaran, dan uang di kas dan bank, lalu grafik 6 bulan",
+          en: "Admos Accounting Beranda (home): this month's profit, income, expenses and cash on hand, then a 6-month chart",
         },
       },
       {
         file: "admos-dashboard-mobile",
         phone: true,
         alt: {
-          id: "Dasbor Admos Accounting di HP: tombol pintas Dari Foto dan Penjualan, lalu pendapatan dan pengeluaran bulan ini",
-          en: "Admos Accounting dashboard on a phone: From Photo and Sales shortcuts, then this month's income and expenses",
+          id: "Beranda Admos Accounting di HP: untung bulan ini, tombol Catat dari Foto, dan menu bawah Beranda, Catat, Penjualan, Laporan",
+          en: "Admos Accounting Beranda on a phone: this month's profit, the Catat dari Foto button, and the bottom bar with Beranda, Catat, Penjualan and Laporan",
         },
       },
       {
         file: "admos-foto-nota-mobile",
         phone: true,
         alt: {
-          id: "Draf jurnal dari foto nota toko bangunan di HP, debit dan kredit sudah seimbang Rp 706.000",
-          en: "Journal draft from a photo of a hardware-store receipt on a phone, debit and credit balanced at Rp 706,000",
+          id: "Catat dari Foto di HP: nota toko kain jadi draf kas keluar Rp 1.151.000, debit dan kredit seimbang, siap disimpan",
+          en: "Catat dari Foto on a phone: a fabric-shop receipt becomes a cash-out draft of Rp 1,151,000, debit and credit balanced, ready to save",
         },
       },
       {
         file: "admos-laba-rugi",
         alt: {
-          id: "Laporan laba rugi Admos Accounting yang tersusun otomatis dari jurnal",
-          en: "Admos Accounting profit and loss report built automatically from the journal",
+          id: "Laporan Untung Rugi Admos Accounting dalam kata sehari-hari: uang dari penjualan, modal barang, biaya usaha, dan untung bersih",
+          en: "Admos Accounting Untung Rugi (profit and loss) report in plain words: sales, cost of goods, operating costs and net profit",
         },
       },
       {
         file: "admos-jurnal",
-        alt: { id: "Daftar jurnal umum di Admos Accounting", en: "General journal list in Admos Accounting" },
+        alt: {
+          id: "Jurnal umum di menu Untuk akuntan, dengan penjualan dan biaya dari Laris yang tercatat otomatis",
+          en: "General journal under the Untuk akuntan (for accountants) menu, with Laris sales and fees recorded automatically",
+        },
       },
     ]),
   },
@@ -72,8 +75,8 @@ export const WORK: Record<string, Work> = {
       {
         file: "admos-laris",
         alt: {
-          id: "Halaman depan Admos Laris dengan contoh label QR produk fashion",
-          en: "Admos Laris home page with sample QR labels for fashion products",
+          id: "Halaman depan Admos Laris dengan contoh kasir dan label QR produk fashion",
+          en: "Admos Laris home page with a sample till and QR label for fashion products",
         },
       },
       {
@@ -85,18 +88,26 @@ export const WORK: Record<string, Work> = {
         },
       },
       {
+        file: "laris-hari-ini-mobile",
+        phone: true,
+        alt: {
+          id: "Layar Hari ini di Admos Laris: penjualan hari ini Rp 3.720.000 dari 8 pesanan, tunai dan QRIS, lalu menu bawah Hari ini, Kasir, Pesanan, Produk, Lainnya",
+          en: "Admos Laris Hari ini (Today) screen: Rp 3,720,000 from 8 orders today, cash and QRIS, then the bottom bar Hari ini, Kasir, Pesanan, Produk, Lainnya",
+        },
+      },
+      {
         file: "laris-kasir-mobile",
         phone: true,
         alt: {
-          id: "Layar kasir Admos Laris di HP dengan keranjang berisi 5 barang batik",
-          en: "Admos Laris till on a phone with 5 batik items in the cart",
+          id: "Kasir Admos Laris di HP dengan harga pameran dan keranjang berisi 4 barang batik",
+          en: "Admos Laris till on a phone with exhibition prices and 4 batik items in the cart",
         },
       },
       {
         file: "laris-saldo",
         alt: {
-          id: "Saldo dan buku besar transaksi di Admos Laris",
-          en: "Balance and transaction ledger in Admos Laris",
+          id: "Saldo Admos Laris: uang yang bisa dicairkan sekarang, yang masih menunggu, dan riwayat saldo",
+          en: "Admos Laris balance: money to withdraw now, money still settling, and the balance history",
         },
       },
     ]),
