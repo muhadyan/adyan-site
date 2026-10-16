@@ -256,6 +256,9 @@ const HIDDEN_CSS = [
   "p.banner:has(.lucide-flask-conical)",
   // Laris "Pesanan Kirim" (shipping orders) is not on the published claim register yet.
   'a[href="/kirim"]',
+  // Nor is the QRIS payout timing: the Saldo row "Masih menunggu, masuk 2 hari kerja".
+  // The seed settles every QRIS sale, so that row only says Rp 0.
+  'section[aria-labelledby="bisa-dicairkan"] .card-rule + .figure-row',
 ].join(",") + "{display:none!important}";
 
 async function newContext(browser: Browser, device: Device, session: Session | null): Promise<BrowserContext> {
@@ -271,7 +274,8 @@ async function newContext(browser: Browser, device: Device, session: Session | n
     return host === "admos.id" || host.endsWith(".admos.id") ? route.abort() : route.fallback();
   });
   // Hidden: the Next dev overlay, the bug-report button, the "Mode uji" banner that
-  // the local QRIS stand-in (scripts/fake-duitku.ts) triggers, and Pesanan Kirim.
+  // the local QRIS stand-in (scripts/fake-duitku.ts) triggers, Pesanan Kirim, and the
+  // Saldo payout-timing row.
   await context.addInitScript((css) => {
     const hide = () => {
       const style = document.createElement("style");

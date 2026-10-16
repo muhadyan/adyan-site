@@ -290,7 +290,6 @@ orders_today() {
   QRIS_ORDERS=""
   order qris "2:1:1"
   order qris "5:0:1 4:1:1"
-  settle_qris "$QRIS_ORDERS"
   order cash "0:1:1 4:0:1"
   order qris "3:0:1 1:1:1"
   order cash "1:2:2"
@@ -298,13 +297,14 @@ orders_today() {
   order cash "3:0:1"
   order cash "0:0:1 1:0:1 4:1:2"
   order unpaid "4:0:1"
-  pass "8 paid orders today at the exhibition (4 cash, 4 QRIS, 2 of them settled), 1 left unpaid"
+  settle_qris "$QRIS_ORDERS"
+  pass "8 paid orders today at the exhibition (4 cash, 4 QRIS, all settled), 1 left unpaid"
 }
 
-# settle_qris "'uuid','uuid'" makes those QRIS sales withdrawable now. QRIS money
-# settles two working days after the sale and no API backdates a QR, so this one
-# SQL statement moves only available_at; every amount stays, which keeps Saldo
-# Laris in Accounting equal to the Laris ledger.
+# settle_qris "'uuid','uuid'" makes those QRIS sales withdrawable now, so Saldo
+# shows no payout date (the site does not publish the payout timing). No API
+# backdates a QR, so this one SQL statement moves only available_at; every amount
+# stays, which keeps Saldo Laris in Accounting equal to the Laris ledger.
 settle_qris() {
   sql "$E2E_LARIS_DATABASE_URL" "UPDATE ledger_entry SET available_at = now() - interval '1 hour'
     WHERE store_id = $STORE_ID AND order_id::text IN ($1)" >/dev/null
