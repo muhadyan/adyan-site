@@ -252,6 +252,8 @@ const HIDDEN_CSS = [
   "nextjs-portal",
   'button[aria-label="Laporkan Masalah"]',
   "p.banner:has(.lucide-flask-conical)",
+  // Laris "Pesanan Kirim" (shipping orders) is not on the published claim register yet.
+  'a[href="/kirim"]',
 ].join(",") + "{display:none!important}";
 
 async function newContext(browser: Browser, device: Device, session: Session | null): Promise<BrowserContext> {
@@ -266,8 +268,8 @@ async function newContext(browser: Browser, device: Device, session: Session | n
     const host = new URL(route.request().url()).hostname;
     return host === "admos.id" || host.endsWith(".admos.id") ? route.abort() : route.fallback();
   });
-  // Hidden: the Next dev overlay, the bug-report button, and the "Mode uji" banner
-  // that the local QRIS stand-in (scripts/fake-duitku.ts) triggers.
+  // Hidden: the Next dev overlay, the bug-report button, the "Mode uji" banner that
+  // the local QRIS stand-in (scripts/fake-duitku.ts) triggers, and Pesanan Kirim.
   await context.addInitScript((css) => {
     const hide = () => {
       const style = document.createElement("style");
