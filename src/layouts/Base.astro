@@ -51,11 +51,11 @@ const jsonLd = siteJsonLd();
     <script is:inline>
       document.addEventListener("touchstart", () => {}, { passive: true });
     </script>
-    <!-- Umami: cookie-free visit counts. data-domains keeps localhost and preview deploys out. -->
+    <!-- Umami (self-hosted on stats.admos.id): cookie-free visit counts. data-domains keeps localhost and preview deploys out. -->
     <script
       is:inline
       defer
-      src="https://cloud.umami.is/script.js"
+      src={SITE.umamiSrc}
       data-website-id={SITE.umamiId}
       data-domains="adyan.admos.id"
     ></script>

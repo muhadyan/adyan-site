@@ -23,4 +23,9 @@ describe("_redirects", () => {
       });
     }
   }
+
+  // Each pitch carries its own code (/p/k7x2), so the tracker can tell which pitch sent the visit.
+  it("sends /p/<code> home with the code as utm_content", () => {
+    expect(rules).toContainEqual(["/p/:code", "/?utm_source=threads&utm_medium=pitch&utm_content=:code", "302"]);
+  });
 });

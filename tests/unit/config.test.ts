@@ -20,6 +20,7 @@ describe("SITE", () => {
 
   it("has an Umami website ID", () => {
     expect(SITE.umamiId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    expect(SITE.umamiSrc).toBe("https://stats.admos.id/script.js");
   });
 
   it("has a Google Search Console verification token", () => {
