@@ -40,12 +40,12 @@ export const id: Copy = {
     rows: [
       {
         need: "Penjualan masih dicatat di bon",
-        build: "Kasir web. Transaksi tercatat, struk dan faktur bisa diprint, pembatalan dan retur ada jejaknya.",
+        build: "Kasir web. Tiap transaksi tercatat, struk bisa diprint, pesanan yang dibatalkan tetap ada jejaknya.",
         proof: "Admos Laris",
       },
       {
         need: "Stok gudang nggak pernah cocok",
-        build: "Stok real-time, label barcode atau QR, catatan barang keluar-masuk, pengingat stok menipis.",
+        build: "Stok per produk berkurang saat terjual, label QR untuk tiap varian, riwayat stok tiap produk.",
         proof: "Admos Laris",
       },
       {
@@ -96,7 +96,7 @@ export const id: Copy = {
         points: [
           "5 laporan otomatis: laba rugi, neraca, arus kas, buku besar, neraca saldo",
           "Langganan dibayar lewat QRIS dan 14 metode lain (Duitku)",
-          "600+ tes otomatis menjaga angka tetap benar",
+          "3.500+ tes otomatis menjaga angka tetap benar",
         ],
         status: "Live, sudah menerima pembayaran",
         stack: ["Go", "PostgreSQL", "Next.js", "AI"],
@@ -106,11 +106,11 @@ export const id: Copy = {
         name: "Admos Laris",
         tagline: "Kasir untuk stan fashion di pameran dan bazar",
         summary:
-          "Label QR untuk tiap varian, scan pakai kamera HP, bayar QRIS atau tunai, struk untuk pembeli. Tetap jalan walau sinyal di venue hilang.",
+          "Label QR untuk tiap varian, scan pakai kamera HP, bayar QRIS atau tunai, struk untuk pembeli. Penjualan tunai tetap jalan saat jaringan gedung mati.",
         points: [
-          "Layar kedua menghadap pembeli, update langsung",
+          "Layar kedua menghadap pembeli, update langsung selama ada jaringan",
           "Saldo dicatat sebagai buku besar yang tidak bisa diubah diam-diam",
-          "Alamat pembeli dibaca AI untuk hitung ongkir",
+          "Satu Akun Admos dengan Admos Accounting. Penjualan Laris langsung tercatat di pembukuan, kalau usahanya juga pakai Accounting",
         ],
         status: "Pra-rilis, uji coba dengan merchant pertama",
         stack: ["Go", "PostgreSQL", "Next.js PWA", "QRIS"],

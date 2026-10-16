@@ -40,12 +40,12 @@ export const en: Copy = {
     rows: [
       {
         need: "Sales still go on paper receipts",
-        build: "A web POS. Every sale is recorded, receipts and invoices print, voids and returns leave a trail.",
+        build: "A web POS. Every sale is recorded, receipts print, cancelled orders still leave a trail.",
         proof: "Admos Laris",
       },
       {
         need: "Warehouse stock never matches",
-        build: "Real-time stock, barcode or QR labels, goods in and out, low-stock reminders.",
+        build: "Stock per product that drops as items sell, a QR label for every variant, stock history per product.",
         proof: "Admos Laris",
       },
       {
@@ -96,7 +96,7 @@ export const en: Copy = {
         points: [
           "5 automatic reports: profit and loss, balance sheet, cash flow, general ledger, trial balance",
           "Subscriptions paid by QRIS and 14 other methods (Duitku)",
-          "600+ automated tests keep the numbers right",
+          "3,500+ automated tests keep the numbers right",
         ],
         status: "Live and taking payments",
         stack: ["Go", "PostgreSQL", "Next.js", "AI"],
@@ -106,11 +106,11 @@ export const en: Copy = {
         name: "Admos Laris",
         tagline: "A till for fashion stalls at exhibitions and bazaars",
         summary:
-          "A QR label for every variant, scan with a phone camera, pay by QRIS or cash, receipt for the buyer. Keeps selling when the venue signal drops.",
+          "A QR label for every variant, scan with a phone camera, pay by QRIS or cash, receipt for the buyer. Cash sales keep working when the venue network is down.",
         points: [
-          "A second screen faces the buyer and updates live",
+          "A second screen faces the buyer and updates live while online",
           "Balances kept as a ledger that cannot be silently edited",
-          "AI reads buyer addresses to price shipping",
+          "One Admos account with Admos Accounting. Laris sales go straight into the books, if the business also uses Accounting",
         ],
         status: "Pre-launch, piloting with the first merchant",
         stack: ["Go", "PostgreSQL", "Next.js PWA", "QRIS"],

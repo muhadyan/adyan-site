@@ -48,6 +48,53 @@ describe("copy", () => {
   });
 });
 
+// Laris claims follow its claim register (admos-laris-hub
+// business/marketing/_context/Laris_Product_Offerings.md): shipping is not
+// published, and "works offline" is only true for cash sales.
+describe("laris claims", () => {
+  const OFFLINE_CLAIM =
+    /\b(jalan|tetap|bisa|catat|keeps?|works?|selling|records?)\b.*\b(offline|sinyal (di venue )?hilang|jaringan (gedung )?mati|tanpa jaringan|signal drops|network (is )?down|no signal)\b/i;
+
+  function larisTexts(copy: typeof id): string[] {
+    const item = copy.products.items.find((p) => p.slug === "admos-laris")!;
+    const rows = copy.needs.rows.filter((r) => r.proof === "Admos Laris");
+    return [...strings(item), ...rows.map((r) => r.build)];
+  }
+
+  it("never publishes shipping features", () => {
+    for (const copy of [id, en]) {
+      expect(larisTexts(copy).filter((s) => /ongkir|alamat|kurir|shipping|address|courier/i.test(s))).toEqual([]);
+    }
+  });
+
+  it("says cash whenever it claims Laris works offline", () => {
+    for (const copy of [id, en]) {
+      const claims = larisTexts(copy).flatMap((s) => s.split(/(?<=\.)\s+/)).filter((s) => OFFLINE_CLAIM.test(s));
+      expect(claims.length).toBeGreaterThan(0);
+      expect(claims.filter((s) => !/tunai|cash/i.test(s))).toEqual([]);
+    }
+  });
+
+  it("treats a stated network limit as a limit, not an offline claim", () => {
+    expect(OFFLINE_CLAIM.test("Layar kedua menghadap pembeli, selama ada jaringan")).toBe(false);
+    expect(OFFLINE_CLAIM.test("QRIS butuh jaringan")).toBe(false);
+    expect(OFFLINE_CLAIM.test("Tetap jalan walau sinyal di venue hilang.")).toBe(true);
+  });
+
+  it("does not credit Laris with invoices, returns or low-stock reminders", () => {
+    for (const copy of [id, en]) {
+      const rows = copy.needs.rows.filter((r) => r.proof === "Admos Laris");
+      expect(rows.filter((r) => /faktur|retur|menipis|invoice|return|low-stock/i.test(r.build))).toEqual([]);
+    }
+  });
+
+  it("says both apps share one Admos account", () => {
+    for (const copy of [id, en]) {
+      expect(larisTexts(copy).some((s) => /Akun Admos|Admos account/.test(s) && /Accounting/.test(s))).toBe(true);
+    }
+  });
+});
+
 describe("work data", () => {
   const slugs = [...id.products.items.map((p) => p.slug), ...id.clients.featured.map((c) => c.slug)];
 
