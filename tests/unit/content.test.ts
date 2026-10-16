@@ -90,6 +90,13 @@ describe("laris claims", () => {
     }
   });
 
+  it("says QRIS needs a network next to the cash-only offline line", () => {
+    for (const copy of [id, en]) {
+      const summary = larisTexts(copy).find((s) => offlineClaims(s).length > 0)!;
+      expect(summary).toMatch(/QRIS (tetap )?(butuh|needs) (jaringan|a connection)/);
+    }
+  });
+
   it("finds offline claims in any word order and treats a network limit as a limit", () => {
     for (const claim of [
       "Tetap jalan walau sinyal di venue hilang.",
@@ -142,6 +149,13 @@ describe("work data", () => {
       expect(work.url, slug).toMatch(/^https:\/\//);
       expect(work.shots.length, slug).toBeGreaterThan(0);
     }
+  });
+
+  it("never names shipping features in Admos screenshot alt text", () => {
+    const admos = Object.entries(WORK).filter(([slug]) => slug.startsWith("admos-"));
+    const alts = admos.flatMap(([, w]) => w.shots.flatMap((s) => [s.alt.id, s.alt.en]));
+    expect(alts.length).toBeGreaterThan(0);
+    expect(alts.filter((a) => /ongkir|kurir|pesanan kirim|shipping|courier/i.test(a))).toEqual([]);
   });
 
   it("gives every screenshot alt text in both languages", () => {

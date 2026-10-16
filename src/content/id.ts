@@ -106,7 +106,7 @@ export const id: Copy = {
         name: "Admos Laris",
         tagline: "Kasir untuk stan fashion di pameran dan bazar",
         summary:
-          "Label QR untuk tiap varian, scan pakai kamera HP, bayar QRIS atau tunai, struk untuk pembeli. Penjualan tunai tetap jalan saat jaringan gedung mati.",
+          "Label QR untuk tiap varian, scan pakai kamera HP, bayar QRIS atau tunai, struk untuk pembeli. Penjualan tunai tetap jalan saat jaringan gedung mati, QRIS tetap butuh jaringan.",
         points: [
           "Layar kedua menghadap pembeli, update langsung selama ada jaringan",
           "Saldo dicatat sebagai buku besar yang tidak bisa diubah diam-diam",

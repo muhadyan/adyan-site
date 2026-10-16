@@ -7,6 +7,8 @@
 # running exhibition, and a few paid orders today (cash and QRIS) that flow into
 # Accounting.
 #
+# macOS only: dates use BSD `date -v`.
+#
 # Usage: bash scripts/seed-local-demo.sh
 # Env:   DEMO_EMAIL (default demo+sekar@example.com), DEMO_PASSWORD (default:
 #        random, printed once at the end), HUB_DIR, and the harness's E2E_*

@@ -106,7 +106,7 @@ export const en: Copy = {
         name: "Admos Laris",
         tagline: "A till for fashion stalls at exhibitions and bazaars",
         summary:
-          "A QR label for every variant, scan with a phone camera, pay by QRIS or cash, receipt for the buyer. Cash sales keep working when the venue network is down.",
+          "A QR label for every variant, scan with a phone camera, pay by QRIS or cash, receipt for the buyer. Cash sales keep working when the venue network is down. QRIS needs a connection.",
         points: [
           "A second screen faces the buyer and updates live while online",
           "Balances kept as a ledger that cannot be silently edited",

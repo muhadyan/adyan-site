@@ -5,6 +5,8 @@
 // replaces the fictional receipt (scripts/demo/nota-toko-kain.jpg) that the Catat dari
 // Foto shot sends when the business has no Catat thread yet (one AI call).
 // Never point this at production: every base must be localhost or *.localhost.
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { chromium, type Browser, type BrowserContext, type Page } from "@playwright/test";
 
 const ACC_WEB = process.env.ACC_WEB_URL ?? "http://accounting.admos.localhost:18083";
@@ -321,7 +323,7 @@ for (const shot of shots) {
     await page.locator(shot.ready).first().waitFor({ timeout: 60_000 });
     await shot.before?.(page);
   } catch (err) {
-    await page.screenshot({ path: `${process.env.TMPDIR ?? "/tmp/"}shoot-failed-${shot.name}.png`, fullPage: true });
+    await page.screenshot({ path: join(tmpdir(), `shoot-failed-${shot.name}.png`), fullPage: true });
     throw new Error(`${shot.name}: not ready at ${page.url()} (see shoot-failed-${shot.name}.png)`, { cause: err });
   }
   await page.waitForTimeout(2000);
