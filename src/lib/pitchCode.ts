@@ -16,7 +16,8 @@ export function rememberPitchCode(search: string, store: Storage | null): string
   const code = pitchCodeFrom(search);
   try {
     if (code) store?.setItem(KEY, code);
-    return code || (store?.getItem(KEY) ?? "");
+    const kept = code || (store?.getItem(KEY) ?? "");
+    return CODE.test(kept) ? kept : "";
   } catch {
     return code;
   }

@@ -38,6 +38,12 @@ describe("rememberPitchCode", () => {
     expect(rememberPitchCode("", s)).toBe("abc234");
   });
 
+  it("ignores a stored value that is not a code", () => {
+    const s = memStore();
+    s.setItem("pitch-code", '"><img src=x>');
+    expect(rememberPitchCode("", s)).toBe("");
+  });
+
   it("works without storage", () => {
     expect(rememberPitchCode("?utm_medium=pitch&utm_content=abc234", null)).toBe("abc234");
     expect(rememberPitchCode("", null)).toBe("");
