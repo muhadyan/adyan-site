@@ -45,7 +45,7 @@ export const id: Copy = {
       },
       {
         need: "Stok gudang nggak pernah cocok",
-        build: "Stok per produk berkurang saat terjual, label QR untuk tiap varian, riwayat stok tiap produk.",
+        build: "Stok per produk berkurang saat pesanan lunas dan tidak pernah menghalangi penjualan, label QR untuk tiap varian, riwayat stok tiap produk.",
         proof: "Admos Laris",
       },
       {
