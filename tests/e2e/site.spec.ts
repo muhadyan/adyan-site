@@ -26,7 +26,7 @@ for (const p of PAGES) {
     });
 
     test("loads the Umami tracker for the live domain only", async ({ page }) => {
-      const tracker = page.locator('script[src="https://cloud.umami.is/script.js"]');
+      const tracker = page.locator(`script[src="${SITE.umamiSrc}"]`);
       await expect(tracker).toHaveAttribute("data-website-id", SITE.umamiId);
       await expect(tracker).toHaveAttribute("data-domains", "adyan.admos.id");
     });
