@@ -158,7 +158,6 @@ export const en: Copy = {
           "A Japanese trading-card platform with 46K users and 20M requests a month. I rewrote its backend from Laravel to Go.",
         figures: [
           { value: "−80%", label: "response time" },
-          { value: "−99%", label: "server errors" },
           { value: "−75%", label: "server cost" },
         ],
       },
