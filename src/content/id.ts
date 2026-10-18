@@ -158,7 +158,6 @@ export const id: Copy = {
           "Platform kartu game Jepang dengan 46 ribu pengguna dan 20 juta request per bulan. Aku tulis ulang backend-nya dari Laravel ke Go.",
         figures: [
           { value: "−80%", label: "waktu respons" },
-          { value: "−99%", label: "error server" },
           { value: "−75%", label: "biaya server" },
         ],
       },
