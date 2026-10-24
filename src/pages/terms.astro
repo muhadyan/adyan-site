@@ -1,0 +1,81 @@
+---
+// Terms for the small tools Adyan runs for his own brands. The TikTok for Developers app
+// "Admos" links here, so keep the TikTok section true.
+import "../styles/global.css";
+import { SITE } from "../config";
+
+const updated = "24 October 2026";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Terms | {SITE.name}</title>
+    <meta name="description" content={`Terms of service for ${SITE.url} and the tools ${SITE.name} runs.`} />
+    <meta name="theme-color" content="#f2f4ef" />
+    <link rel="canonical" href={new URL("/terms/", SITE.url).href} />
+  </head>
+  <body>
+    <main class="terms">
+      <p><a href="/">← {SITE.url.replace("https://", "")}</a></p>
+      <h1>Terms of Service</h1>
+      <p class="muted">Last updated: {updated}</p>
+
+      <h2>Who this is</h2>
+      <p>
+        This site and the tools below are run by {SITE.name}, a software engineer in Yogyakarta, Indonesia.
+        Contact: <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>This website</h2>
+      <p>
+        The site describes my services. Nothing on it is a binding offer: price, scope and dates of any project
+        are agreed in writing before work starts.
+      </p>
+
+      <h2>The marketing tools</h2>
+      <p>
+        I run a private tool that drafts social media posts for brands I own or manage (Admos, RingkasAja and
+        Ummu Alfatih). It is not offered to the public and has no sign-up.
+      </p>
+      <ul>
+        <li>Every post is reviewed by a person before it is published.</li>
+        <li>
+          The TikTok app "Admos" only uploads drafts to the TikTok inbox of those brands' own accounts. A person
+          opens TikTok, edits the draft and decides whether to post it. It never posts on its own and never
+          accesses anyone else's account.
+        </li>
+        <li>An account owner can disconnect the app at any time in TikTok's settings.</li>
+      </ul>
+
+      <h2>No warranty</h2>
+      <p>
+        The site and the tools are provided as they are. I am not liable for indirect loss from using them, to the
+        extent the law allows.
+      </p>
+
+      <h2>Privacy</h2>
+      <p>How data is handled is described in the <a href="/privacy/">Privacy Policy</a>.</p>
+
+      <h2>Changes</h2>
+      <p>I may update these terms; the date above shows the latest version.</p>
+    </main>
+  </body>
+</html>
+
+<style>
+  .terms {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 3rem 1rem 4rem;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .terms h1 { font-size: 2rem; margin: 1rem 0 0.25rem; }
+  .terms h2 { font-size: 1.15rem; margin: 2rem 0 0.5rem; }
+  .terms a { color: var(--ledger); }
+  .muted { color: var(--ink-soft); }
+</style>

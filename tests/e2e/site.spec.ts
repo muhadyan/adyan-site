@@ -153,3 +153,17 @@ test("privacy page explains the email tool and names a contact", async ({ page }
   await expect(page.getByText(/gmail\.send/)).toBeVisible();
   await expect(page.locator(`a[href="mailto:${SITE.email}"]`).first()).toBeVisible();
 });
+
+// The TikTok for Developers app "Admos" links to both pages.
+test("terms page explains the TikTok draft tool and links privacy", async ({ page }) => {
+  await page.goto("/terms/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Terms/i);
+  await expect(page.getByText(/TikTok inbox/)).toBeVisible();
+  await expect(page.locator('a[href="/privacy/"]')).toBeVisible();
+  await expect(page.locator(`a[href="mailto:${SITE.email}"]`).first()).toBeVisible();
+});
+
+test("privacy page names the TikTok scopes", async ({ page }) => {
+  await page.goto("/privacy/");
+  await expect(page.getByText(/video\.upload/).first()).toBeVisible();
+});
