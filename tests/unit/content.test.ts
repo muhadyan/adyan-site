@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { id } from "../../src/content/id";
 import { en } from "../../src/content/en";
 import { WORK } from "../../src/data/work";
+import { OFFERS, RENEWAL, rupiah } from "../../src/data/offers";
 
 /** Collects "path:type" pairs so two copy trees can be compared by shape. */
 function shape(value: unknown, path = ""): string[] {
@@ -35,6 +36,16 @@ describe("copy", () => {
   it("keeps the same project and client order in both languages", () => {
     expect(en.products.items.map((p) => p.slug)).toEqual(id.products.items.map((p) => p.slug));
     expect(en.clients.featured.map((c) => c.slug)).toEqual(id.clients.featured.map((c) => c.slug));
+  });
+
+  // "In my fifth year" since Mar 2022; old counts ("4 tahun", "11 sistem", "99,9%") are gone.
+  it("uses the current experience wording and no stale counts", () => {
+    for (const copy of [id, en]) {
+      const text = strings(copy).join("\n");
+      expect(text).not.toMatch(/\b4\+? (tahun|years?)\b|11 (sistem|systems|klien|clients)|99[,.]9/);
+    }
+    expect(strings(id).join("\n")).toMatch(/tahun ke-5/);
+    expect(strings(en).join("\n")).toMatch(/fifth year/);
   });
 
   // Buyers don't care about backend vs frontend. Official job titles in the
@@ -73,7 +84,8 @@ describe("laris claims", () => {
   function larisTexts(copy: typeof id): string[] {
     const item = copy.products.items.find((p) => p.slug === "admos-laris")!;
     const rows = copy.needs.rows.filter((r) => r.proof === "Admos Laris");
-    return [...strings(item), ...rows.map((r) => r.build)];
+    const problems = copy.lanes.items.flatMap((l) => l.problems).filter((p) => /Laris/.test(p.proof));
+    return [...strings(item), ...rows.map((r) => r.build), ...problems.map((p) => p.fix)];
   }
 
   it("never publishes shipping features", () => {
@@ -135,6 +147,77 @@ describe("laris claims", () => {
   it("says both apps share one Admos account", () => {
     for (const copy of [id, en]) {
       expect(larisTexts(copy).some((s) => /Akun Admos|Admos account/.test(s) && /Accounting/.test(s))).toBe(true);
+    }
+  });
+});
+
+describe("lanes", () => {
+  it("has the website, kasir and pembukuan lanes in both languages", () => {
+    for (const copy of [id, en]) {
+      expect(copy.lanes.items.map((l) => l.slug)).toEqual(["website", "kasir", "pembukuan"]);
+    }
+  });
+
+  it("sells the right packages on each lane, ERP next to bookkeeping", () => {
+    for (const copy of [id, en]) {
+      const packages = Object.fromEntries(copy.lanes.items.map((l) => [l.slug, l.packages.map((p) => p.offer)]));
+      expect(packages).toEqual({ website: ["website"], kasir: ["kasir"], pembukuan: ["pembukuan", "erp"] });
+    }
+  });
+
+  it("gives every lane its own WhatsApp message, with no price in it", () => {
+    for (const copy of [id, en]) {
+      const messages = [copy.wa.message, ...copy.lanes.items.map((l) => l.wa)];
+      expect(new Set(messages).size).toBe(messages.length);
+      expect(messages.filter((m) => /Rp/.test(m))).toEqual([]);
+    }
+  });
+
+  it("has package lines, problems and questions on every lane", () => {
+    for (const copy of [id, en]) {
+      for (const lane of copy.lanes.items) {
+        expect(lane.packages.every((p) => p.lines.length >= 3), lane.slug).toBe(true);
+        expect(lane.problems.length, lane.slug).toBeGreaterThanOrEqual(2);
+        expect(lane.faq.length, lane.slug).toBeGreaterThanOrEqual(2);
+      }
+    }
+  });
+});
+
+describe("prices", () => {
+  const allowed = (locale: "id" | "en") =>
+    new Set(
+      [...Object.values(OFFERS).map((o) => o.from), ...Object.values(RENEWAL)].flatMap((n) => [
+        rupiah(n, locale),
+        rupiah(n, locale, true),
+      ]),
+    );
+
+  // A price typed by hand could drift from OFFERS, the JSON-LD and Maps.
+  it("only shows prices from OFFERS", () => {
+    for (const [locale, copy] of [["id", id], ["en", en]] as const) {
+      const found = strings(copy).flatMap((s) => s.match(/Rp\s?[\d.,]+(\s(juta|ribu|million)|jt|rb|M|k)?/g) ?? []);
+      expect(found.length).toBeGreaterThan(0);
+      expect(found.filter((p) => !allowed(locale).has(p))).toEqual([]);
+    }
+  });
+
+  it("shows the website and kasir starting prices in the hero", () => {
+    for (const [locale, copy] of [["id", id], ["en", en]] as const) {
+      expect(copy.hero.lede.map((l) => l.price)).toEqual([
+        rupiah(OFFERS.website.from, locale),
+        rupiah(OFFERS.kasir.from, locale),
+      ]);
+    }
+  });
+});
+
+describe("testimonial", () => {
+  // Ummu Alfatih approved the text on 2026-10-29.
+  it("is approved and credited to Ummu Alfatih", () => {
+    for (const copy of [id, en]) {
+      expect(copy.showcase.testimonial.approved).toBe(true);
+      expect(copy.showcase.testimonial.by).toMatch(/Ummu Alfatih/);
     }
   });
 });
