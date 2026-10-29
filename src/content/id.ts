@@ -4,7 +4,7 @@ export const id: Copy = {
   meta: {
     title: "Jasa Pembuatan Website, Aplikasi Kasir & Pembukuan | Adyan Rohutomo · Admos ERP",
     description:
-      "Website usaha mulai Rp2,5 juta. Sistem kasir, stok, dan pembukuan mulai Rp5 juta. Dibuat oleh mantan VP Business yang kini di tahun ke-5 sebagai software engineer (ex Tokopedia). Yogyakarta.",
+      "Website usaha mulai Rp2,5 juta. Kasir & stok mulai Rp5 juta. Pembukuan mulai Rp10 juta. Dibuat oleh mantan VP Business yang kini di tahun ke-5 sebagai software engineer (ex Tokopedia). Yogyakarta.",
   },
   nav: { skip: "Langsung ke isi", langLabel: "Pilih bahasa", contact: "Chat WhatsApp" },
   wa: { message: "Halo Adyan, aku lihat adyan.admos.id. Mau minta estimasi untuk usahaku." },
@@ -12,7 +12,8 @@ export const id: Copy = {
     title: "Website dan sistem usaha yang ikut cara kerjamu.",
     lede: [
       { text: "Website mulai", price: "Rp2,5 juta" },
-      { text: "Sistem kasir, stok, dan pembukuan mulai", price: "Rp5 juta" },
+      { text: "Kasir & stok mulai", price: "Rp5 juta" },
+      { text: "Pembukuan mulai", price: "Rp10 juta" },
     ],
     cta: "Minta estimasi gratis via WhatsApp",
     ctaNote: "Kirim contoh nota/Excel/website yang kamu suka, aku balas dengan perkiraan biaya & waktu.",
@@ -314,7 +315,6 @@ export const id: Copy = {
     body: "Brand busana muslimah dari Yogyakarta. Toko online-nya aku siapkan, pembukuannya jalan di Admos Accounting, dan kasir bazarnya sedang uji coba Admos Laris.",
     visit: "Lihat tokonya",
     testimonial: {
-      approved: true,
       quote:
         "Dulu penjualan bazar dan stok kami catat manual, rekapnya makan waktu. Sekarang toko online, pembukuan, dan kasir bazar kami tersambung, jadi laporannya lebih cepat kelihatan. Mas Adyan juga cepat bantu kalau ada kendala.",
       by: "Ummu Alfatih, brand busana muslimah, Yogyakarta",

@@ -17,14 +17,10 @@ const { testimonial } = showcase;
     <h2 id="showcase-title">{showcase.title}</h2>
     <div class="body">
       <p>{showcase.body}</p>
-      {
-        testimonial.approved && (
-          <blockquote>
-            <p>“{testimonial.quote}”</p>
-            <footer>{testimonial.by}</footer>
-          </blockquote>
-        )
-      }
+      <blockquote>
+        <p>“{testimonial.quote}”</p>
+        <footer>{testimonial.by}</footer>
+      </blockquote>
       <a href={WORK["ummu-alfatih"]!.url} rel="noopener" target="_blank">{showcase.visit}</a>
       {compact && <p class="worked">{showcase.workedAt}</p>}
     </div>

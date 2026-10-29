@@ -205,21 +205,34 @@ describe("prices", () => {
     }
   });
 
-  it("shows the website and kasir starting prices in the hero", () => {
+  // Each hero line names one offer, so no product borrows a cheaper one's price.
+  it("shows the website, kasir and pembukuan starting prices in the hero", () => {
     for (const [locale, copy] of [["id", id], ["en", en]] as const) {
       expect(copy.hero.lede.map((l) => l.price)).toEqual([
         rupiah(OFFERS.website.from, locale),
         rupiah(OFFERS.kasir.from, locale),
+        rupiah(OFFERS.pembukuan.from, locale),
       ]);
+      expect(copy.hero.lede[1]!.text).not.toMatch(/pembukuan|bookkeeping/i);
+    }
+  });
+
+  it("gives each offer its own price in the home description", () => {
+    for (const [locale, copy] of [["id", id], ["en", en]] as const) {
+      const sentences = copy.meta.description.split(". ");
+      for (const [word, key] of [[/website/i, "website"], [/kasir|\bPOS\b/i, "kasir"], [/pembukuan|bookkeeping/i, "pembukuan"]] as const) {
+        const sentence = sentences.find((s) => word.test(s) && /Rp/.test(s));
+        expect(sentence, `${locale} ${key}`).toContain(rupiah(OFFERS[key].from, locale));
+      }
     }
   });
 });
 
 describe("testimonial", () => {
   // Ummu Alfatih approved the text on 2026-10-29.
-  it("is approved and credited to Ummu Alfatih", () => {
+  it("has the approved quote, credited to Ummu Alfatih", () => {
+    expect(id.showcase.testimonial.quote).toMatch(/^Dulu penjualan bazar dan stok kami catat manual/);
     for (const copy of [id, en]) {
-      expect(copy.showcase.testimonial.approved).toBe(true);
       expect(copy.showcase.testimonial.by).toMatch(/Ummu Alfatih/);
     }
   });

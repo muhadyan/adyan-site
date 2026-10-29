@@ -60,6 +60,13 @@ html {
   }
 }
 
+/* Phones: the sticky WhatsApp bar (56px) never covers a focused or scrolled-to element. */
+@media (max-width: 719px) {
+  html {
+    scroll-padding-bottom: 64px;
+  }
+}
+
 /* Taps fire at once: nothing here needs double-tap zoom. */
 a,
 summary {

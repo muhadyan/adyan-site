@@ -4,7 +4,7 @@ export const en: Copy = {
   meta: {
     title: "Business Websites, POS & Bookkeeping Systems | Adyan Rohutomo · Admos ERP",
     description:
-      "Business websites from Rp2.5 million. POS, stock and bookkeeping systems from Rp5 million. Built by a former VP of Business, now in my fifth year as a software engineer (ex Tokopedia). Yogyakarta.",
+      "Business websites from Rp2.5 million. POS & stock from Rp5 million. Bookkeeping from Rp10 million. Built by a former VP of Business, now in my fifth year as a software engineer (ex Tokopedia). Yogyakarta.",
   },
   nav: { skip: "Skip to content", langLabel: "Choose language", contact: "Chat on WhatsApp" },
   wa: { message: "Hi Adyan, I found adyan.admos.id. I’d like an estimate for my business." },
@@ -12,7 +12,8 @@ export const en: Copy = {
     title: "Websites and business systems that follow how you work.",
     lede: [
       { text: "Websites from", price: "Rp2.5 million" },
-      { text: "POS, stock and bookkeeping systems from", price: "Rp5 million" },
+      { text: "POS & stock from", price: "Rp5 million" },
+      { text: "Bookkeeping from", price: "Rp10 million" },
     ],
     cta: "Get a free estimate on WhatsApp",
     ctaNote: "Send a sample receipt, spreadsheet or website you like, and I’ll reply with an estimated cost and timeline.",
@@ -314,7 +315,6 @@ export const en: Copy = {
     body: "A muslimah fashion brand from Yogyakarta. I set up their online shop, their books run on Admos Accounting, and their bazaar till is piloting Admos Laris.",
     visit: "See the shop",
     testimonial: {
-      approved: true,
       quote:
         "We used to record bazaar sales and stock by hand, and the recap took ages. Now our online shop, bookkeeping and bazaar till are connected, so we see the reports much sooner. Mas Adyan is also quick to help when something comes up.",
       by: "Ummu Alfatih, muslimah fashion brand, Yogyakarta (translated from Indonesian)",

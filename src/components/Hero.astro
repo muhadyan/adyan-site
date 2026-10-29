@@ -61,8 +61,7 @@ const { hero } = copy;
             alt={wide.alt[locale]}
             widths={[560, 1120]}
             sizes="(min-width: 900px) 560px, 1px"
-            loading="eager"
-            fetchpriority="high"
+            loading="lazy"
           />
         </div>
       )
@@ -71,7 +70,7 @@ const { hero } = copy;
       {
         phones.map((shot) => (
           <li class="phone-frame">
-            <Image src={shot.image} alt={shot.alt[locale]} widths={[200, 400]} sizes="200px" loading="lazy" />
+            <Image src={shot.image} alt={shot.alt[locale]} widths={[200, 400]} sizes="200px" loading="eager" />
           </li>
         ))
       }

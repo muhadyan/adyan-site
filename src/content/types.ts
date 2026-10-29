@@ -77,7 +77,7 @@ export type Copy = {
     title: string;
     body: string;
     visit: string;
-    testimonial: { approved: boolean; quote: string; by: string };
+    testimonial: { quote: string; by: string };
     workedAt: string;
   };
   clients: {
