@@ -1,12 +1,8 @@
 # Short tag links for Threads. Each adds UTM tags so Umami shows the source.
 # The "." rows catch a link that swallows the full stop after it.
-# /p/<code>: one code per pitch, so a visit can be traced to the pitch that sent it.
 /p   /?utm_source=threads&utm_medium=pitch  302
 /p.  /?utm_source=threads&utm_medium=pitch  302
-/p/:code  /?utm_source=threads&utm_medium=pitch&utm_content=:code  302
 /b   /?utm_source=threads&utm_medium=bio    302
 /b.  /?utm_source=threads&utm_medium=bio    302
-# /<lane>/<code>: a pitch link that lands on the page for what the post asked about.
-/website/:code    /website/?utm_source=threads&utm_medium=pitch&utm_content=:code    302
-/kasir/:code      /kasir/?utm_source=threads&utm_medium=pitch&utm_content=:code      302
-/pembukuan/:code  /pembukuan/?utm_source=threads&utm_medium=pitch&utm_content=:code  302
+# /p/<code> and /<lane>/<code> pitch links are Pages Functions (functions/), because
+# _redirects left ":code" unreplaced in the query string on the live site.

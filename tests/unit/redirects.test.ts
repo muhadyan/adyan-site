@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 // Short tag links posted on Threads. Each lands on the home page with UTM tags
@@ -24,19 +24,11 @@ describe("_redirects", () => {
     }
   }
 
-  // Each pitch carries its own code (/p/k7x2), so the tracker can tell which pitch sent the visit.
-  it("sends /p/<code> home with the code as utm_content", () => {
-    expect(rules).toContainEqual(["/p/:code", "/?utm_source=threads&utm_medium=pitch&utm_content=:code", "302"]);
+  // Pitch codes are handled by Pages Functions; a _redirects rule would shadow them.
+  it("leaves /p/<code> and /<lane>/<code> to the Pages Functions", () => {
+    expect(rules.filter(([from]) => from!.includes(":code"))).toEqual([]);
+    for (const path of ["p", "website", "kasir", "pembukuan"]) {
+      expect(existsSync(new URL(`../../functions/${path}/[code].ts`, import.meta.url)), path).toBe(true);
+    }
   });
-
-  // Pitch links land on the page for what the post asked about (/website/k7x2).
-  for (const lane of ["website", "kasir", "pembukuan"]) {
-    it(`sends /${lane}/<code> to the ${lane} page with the code as utm_content`, () => {
-      expect(rules).toContainEqual([
-        `/${lane}/:code`,
-        `/${lane}/?utm_source=threads&utm_medium=pitch&utm_content=:code`,
-        "302",
-      ]);
-    });
-  }
 });
