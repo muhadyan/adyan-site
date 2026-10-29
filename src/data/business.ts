@@ -1,4 +1,5 @@
 import { SITE } from "../config";
+import { OFFERS } from "./offers";
 
 /**
  * The Google Maps (Business Profile) listing. Name, address and phone must match
@@ -6,6 +7,8 @@ import { SITE } from "../config";
  */
 export const BUSINESS = {
   name: "Admos ERP",
+  // Stays the Maps number until the listing is verified. WhatsApp buttons use SITE.whatsapp.
+  phone: "6285717913273",
   phoneDisplay: "0857-1791-3273",
   address: {
     street: "Jl. Beringin Raya No. 1B, Denokan, Maguwoharjo",
@@ -67,7 +70,7 @@ export function siteJsonLd(): string {
         name: BUSINESS.name,
         url: SITE.url,
         image: `${SITE.url}/og-id.png`,
-        telephone: `+${SITE.whatsapp}`,
+        telephone: `+${BUSINESS.phone}`,
         email: `mailto:${SITE.email}`,
         founder: { "@id": personId },
         address: {
@@ -83,6 +86,15 @@ export function siteJsonLd(): string {
           { "@type": "OpeningHoursSpecification", dayOfWeek: hours.days, opens: hours.opens, closes: hours.closes },
         ],
         areaServed: BUSINESS.areaServed.map((name) => ({ "@type": "AdministrativeArea", name })),
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Layanan Admos ERP",
+          itemListElement: Object.values(OFFERS).map((offer) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: offer.name.id },
+            priceSpecification: { "@type": "PriceSpecification", minPrice: offer.from, priceCurrency: "IDR" },
+          })),
+        },
       },
     ],
   }).replace(/</g, "\\u003c");

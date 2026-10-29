@@ -21,7 +21,7 @@ for (const p of PAGES) {
       const links = page.locator('a[href^="https://wa.me/"]');
       expect(await links.count()).toBeGreaterThanOrEqual(2);
       for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href")))) {
-        expect(href).toMatch(/^https:\/\/wa\.me\/6285717913273\?text=.+/);
+        expect(href).toMatch(new RegExp(`^https://wa\\.me/${SITE.whatsapp}\\?text=.+`));
       }
     });
 
