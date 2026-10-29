@@ -1,0 +1,93 @@
+---
+import type { Locale, Package } from "../content/types";
+import { OFFERS, rupiah } from "../data/offers";
+
+interface Props {
+  pkg: Package;
+  from: string;
+  locale: Locale;
+}
+
+// A printed slip: what the package holds, then the starting price as its total.
+const { pkg, from, locale } = Astro.props;
+---
+
+<article class="slip" aria-label={pkg.title}>
+  <h3>{pkg.title}</h3>
+  <ul>
+    {
+      pkg.lines.map((line) => (
+        <li>
+          <span>{line}</span>
+          <span class="tick" aria-hidden="true">
+            ✓
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="sum">
+    <span>{from}</span>
+    <span class="total">{rupiah(OFFERS[pkg.offer].from, locale)}</span>
+  </p>
+  {pkg.notes.map((note) => <p class="note">{note}</p>)}
+</article>
+
+<style>
+  .slip {
+    padding: 24px 20px 28px;
+    background: var(--slip);
+    box-shadow:
+      0 1px 2px rgb(27 36 32 / 0.08),
+      0 8px 24px rgb(27 36 32 / 0.08);
+    font-family: var(--font-mono);
+    font-size: 0.84375rem;
+    line-height: 1.6;
+  }
+
+  h3 {
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--rule);
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  ul {
+    display: grid;
+    gap: 6px;
+    padding: 12px 0;
+    list-style: none;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  li,
+  .sum {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .tick {
+    color: var(--ledger);
+    font-weight: 600;
+  }
+
+  .sum {
+    align-items: baseline;
+    padding-top: 12px;
+  }
+
+  .sum .total {
+    font-size: 1.125rem;
+  }
+
+  .note {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-family: var(--font-sans);
+    font-size: 0.78125rem;
+  }
+</style>

@@ -258,53 +258,6 @@ export const id: Copy = {
     { value: "3", label: "sistem jalan di Ummu Alfatih sejak 2025" },
     { value: "90 hari", label: "garansi bug di semua paket" },
   ],
-  needs: {
-    title: "Masalahmu, sistemnya, buktinya",
-    intro: "Ini kebutuhan yang paling sering aku temui. Tiap baris sudah pernah aku kerjakan.",
-    columns: { need: "Masalahmu", build: "Aku bikinin", proof: "Buktinya" },
-    rows: [
-      {
-        need: "Penjualan masih dicatat di bon",
-        build: "Kasir web. Tiap transaksi tercatat, struk bisa diprint, pesanan yang dibatalkan tetap ada jejaknya.",
-        proof: "Admos Laris",
-      },
-      {
-        need: "Stok gudang nggak pernah cocok",
-        build: "Stok per produk berkurang saat pesanan lunas dan tidak pernah menghalangi penjualan, label QR untuk tiap varian.",
-        proof: "Admos Laris",
-      },
-      {
-        need: "Laporan keuangan dikerjakan tiap akhir bulan",
-        build: "Pembukuan otomatis. Jurnal, laba rugi, neraca, dan arus kas langsung dari transaksi.",
-        proof: "Admos Accounting",
-      },
-      {
-        need: "Orderan dari chat berantakan",
-        build: "Order dari WhatsApp dan DM jadi rapi. Alamat dibaca AI, ongkir dibandingkan, resi terlacak.",
-        proof: "RingkasAja",
-      },
-      {
-        need: "Butuh satu sistem untuk Finance, HR, dan GA",
-        build: "ERP yang ikut alur kantormu. Keuangan, karyawan, aset, dan persetujuan dalam satu tempat.",
-        proof: "5+ tahun memimpin Finance, HR, GA",
-      },
-      {
-        need: "Klien terus tanya progres project",
-        build: "Sistem tracking project. Status per tahap, update otomatis ke klien, riwayat lengkap.",
-        proof: "Software engineer sejak 2022",
-      },
-      {
-        need: "Butuh website company atau katalog",
-        build: "Website cepat yang mudah diupdate dan gampang ditemukan di Google.",
-        proof: "Situs yang sedang kamu buka",
-      },
-      {
-        need: "Sistem lama lambat atau sering error",
-        build: "Audit, perbaikan bug, dan rombak sistem di balik layar tanpa mengganggu yang sedang jalan.",
-        proof: "Search Array, 5x lebih cepat",
-      },
-    ],
-  },
   products: {
     title: "Produk yang aku bangun sendiri",
     intro: "Tiga produk ini aku rancang, bangun, dan jalankan sendiri dari nol sampai live.",

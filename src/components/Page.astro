@@ -1,15 +1,21 @@
 ---
 import Base from "../layouts/Base.astro";
 import type { Copy, Locale } from "../content/types";
+import { HERO_SHOTS, homePath } from "../data/lanes";
+import { OFFERS, rupiah } from "../data/offers";
+import { findShot } from "../data/work";
 import Header from "./Header.astro";
 import Hero from "./Hero.astro";
-import Needs from "./Needs.astro";
+import LaneCards from "./LaneCards.astro";
+import ProofStrip from "./ProofStrip.astro";
+import Why from "./Why.astro";
+import Showcase from "./Showcase.astro";
 import Products from "./Products.astro";
 import Clients from "./Clients.astro";
-import Why from "./Why.astro";
 import Process from "./Process.astro";
 import Faq from "./Faq.astro";
 import Footer from "./Footer.astro";
+import StickyWa from "./StickyWa.astro";
 
 interface Props {
   locale: Locale;
@@ -17,18 +23,53 @@ interface Props {
 }
 
 const { locale, copy } = Astro.props;
+const paths = { id: homePath("id"), en: homePath("en") };
+const wa = copy.wa.message;
+const lane = "home";
+const phones = HERO_SHOTS.phones.map((file) => findShot(file)!);
+// Buyers read the Indonesian page: one client case and a short "worked at" line.
+// The English page keeps the products and the full client list for everyone else.
+const full = locale === "en";
 ---
 
-<Base locale={locale} copy={copy}>
-  <Header locale={locale} copy={copy} />
+<Base locale={locale} meta={copy.meta} paths={paths} card={locale}>
+  <Header locale={locale} copy={copy} paths={paths} wa={wa} lane={lane} />
   <main id="main">
-    <Hero copy={copy} />
-    <Needs needs={copy.needs} />
-    <Products products={copy.products} locale={locale} />
+    <Hero
+      copy={copy}
+      locale={locale}
+      title={copy.hero.title}
+      ctaNote={copy.hero.ctaNote}
+      wa={wa}
+      lane={lane}
+      phones={phones}
+      wide={findShot(HERO_SHOTS.wide)}
+      caption={copy.hero.shotsCaption}
+    >
+      <p>
+        {
+          copy.hero.lede.map((line) => (
+            <>
+              {line.text} <strong>{line.price}</strong>.{" "}
+            </>
+          ))
+        }
+      </p>
+    </Hero>
+    <LaneCards lanes={copy.lanes} locale={locale} />
+    <ProofStrip figures={copy.proof} />
     <Why why={copy.why} />
-    <Clients clients={copy.clients} locale={locale} />
+    <Showcase showcase={copy.showcase} compact={!full} />
+    {full && <Products products={copy.products} locale={locale} />}
+    {full && <Clients clients={copy.clients} locale={locale} skip={["ummu-alfatih"]} />}
     <Process process={copy.process} />
-    <Faq faq={copy.faq} />
+    <Faq title={copy.faq.title} items={copy.faq.items} />
   </main>
-  <Footer copy={copy} />
+  <Footer copy={copy} wa={wa} lane={lane} />
+  <StickyWa
+    label={copy.nav.contact}
+    price={`${copy.lanes.from} ${rupiah(OFFERS.website.from, locale, true)}`}
+    wa={wa}
+    lane={lane}
+  />
 </Base>

@@ -1,69 +1,110 @@
 ---
+import { Image } from "astro:assets";
 import { waLink } from "../config";
-import type { Copy } from "../content/types";
-import Receipt from "./Receipt.astro";
+import type { Copy, Locale } from "../content/types";
+import type { Shot } from "../data/work";
+import portrait from "../assets/profile/adyan.jpg";
 import WaIcon from "./WaIcon.astro";
 
 interface Props {
   copy: Copy;
+  locale: Locale;
+  title: string;
+  ctaNote: string;
+  wa: string;
+  lane: string;
+  phones: Shot[];
+  /** Desktop screenshot shown behind the first phone on large screens (home only). */
+  wide?: Shot;
+  caption?: string;
 }
 
-const { copy } = Astro.props;
+// The price lines go in the default slot, between the headline and the button.
+const { copy, locale, title, ctaNote, wa, lane, phones, wide, caption } = Astro.props;
 const { hero } = copy;
 ---
 
 <section class="hero wrap" aria-labelledby="hero-title">
   <div class="text">
-    <h1 id="hero-title">{hero.title}</h1>
-    <p class="lede">{hero.lede}</p>
-    <p class="proof">{hero.proof}</p>
+    <h1 id="hero-title">{title}</h1>
+    <div class="lede"><slot /></div>
     <div class="cta">
       <a
         class="button"
-        href={waLink(copy.wa.message)}
+        href={waLink(wa)}
         rel="noopener"
         target="_blank"
         data-umami-event="wa-click"
         data-umami-event-spot="hero"
+        data-umami-event-lane={lane}
       >
         <WaIcon />
         {hero.cta}
       </a>
-      <p class="cta-note">{hero.ctaNote}</p>
+      <p class="cta-note">{ctaNote}</p>
+    </div>
+    <div class="trust">
+      <Image src={portrait} alt={copy.why.photoAlt} widths={[48, 96]} sizes="48px" class="face" loading="eager" />
+      <p>
+        <span class="chip">{hero.chip}</span>
+        <span class="reply">{hero.reply}</span>
+        <span class="hours">{hero.hours}</span>
+      </p>
     </div>
   </div>
-  <Receipt receipt={hero.receipt} />
+  <figure class:list={["visual", { "has-wide": wide }]}>
+    {
+      wide && (
+        <div class="wide">
+          <Image
+            src={wide.image}
+            alt={wide.alt[locale]}
+            widths={[560, 1120]}
+            sizes="(min-width: 900px) 560px, 1px"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      )
+    }
+    <ul class="phones">
+      {
+        phones.map((shot) => (
+          <li class="phone-frame">
+            <Image src={shot.image} alt={shot.alt[locale]} widths={[200, 400]} sizes="200px" loading="lazy" />
+          </li>
+        ))
+      }
+    </ul>
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
 </section>
 
 <style>
   .hero {
-    /* The tilted receipt and its stamp must never cause sideways scroll. */
-    overflow-x: clip;
-    overflow-clip-margin: 8px;
     display: grid;
-    gap: 56px;
+    gap: 24px;
     align-items: start;
     /* Tight top so the WhatsApp button shows on first open, down to 1366x768 laptops and 360x640 phones. */
-    padding-block: clamp(20px, 3.2vw, 48px) clamp(64px, 9vw, 120px);
+    padding-block: clamp(16px, 3.2vw, 48px) clamp(48px, 7vw, 96px);
   }
 
   @media (min-width: 900px) {
     .hero {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 500px);
+      gap: 56px;
     }
   }
 
   @media (min-width: 1200px) {
-    /* 380px slip + 16px for its tilt: receipt lines never wrap. */
     .hero {
-      grid-template-columns: minmax(0, 1fr) 396px;
+      grid-template-columns: minmax(0, 1fr) 560px;
       gap: 64px;
     }
   }
 
   h1 {
-    font-size: clamp(1.875rem, 1.2rem + 2.2vw, 3rem);
+    font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
     font-variation-settings: "wdth" 125;
     line-height: 1.04;
     letter-spacing: -0.02em;
@@ -71,32 +112,152 @@ const { hero } = copy;
   }
 
   .lede {
-    margin-top: clamp(14px, 1.5vw, 20px);
-    font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.3125rem);
+    margin-top: 12px;
+    font-size: var(--step-0);
     line-height: 1.45;
     max-width: 34rem;
   }
 
-  .proof {
-    margin-top: 14px;
-    padding-left: 16px;
-    border-left: 3px double var(--ledger);
-    color: var(--ink-soft);
-    font-size: 1rem;
-    line-height: 1.5;
-    max-width: 34rem;
+  @media (min-width: 900px) {
+    .lede {
+      margin-top: 20px;
+      font-size: 1.1875rem;
+    }
   }
 
   .cta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 20px;
-    margin-top: clamp(20px, 2vw, 28px);
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+    margin-top: 20px;
   }
 
   .cta-note {
+    max-width: 30rem;
     color: var(--ink-soft);
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  .trust {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .trust :global(.face) {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 22%;
+    border: 2px solid var(--slip);
+    outline: 1px solid var(--rule);
+  }
+
+  .trust p {
+    display: grid;
+    justify-items: start;
+    gap: 2px;
+    font-size: 0.84375rem;
+    line-height: 1.3;
+  }
+
+  .hours {
+    color: var(--ink-soft);
+    font-size: 0.78125rem;
+  }
+
+  /* Phones: two phone screenshots side by side on a pale panel, cropped at the bottom. */
+  .visual {
+    position: relative;
+  }
+
+  .wide {
+    display: none;
+  }
+
+  .phones {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    height: 360px;
+    padding: 20px 12px 0;
+    overflow: hidden;
+    list-style: none;
+    background: var(--paper-deep);
+    border-radius: var(--radius);
+  }
+
+  /* Phone-shaped (390x844 captures): the panel crops the bottom, never the sides. */
+  .phones li {
+    flex: none;
+    width: min(160px, 42%);
+    aspect-ratio: 390 / 844;
+  }
+
+  figcaption {
+    margin-top: 8px;
+    color: var(--ink-soft);
+    font-size: 0.78125rem;
+  }
+
+  @media (min-width: 900px) {
+    .phones {
+      height: 440px;
+      padding-top: 28px;
+    }
+
+    .phones li {
+      width: 200px;
+    }
+
+    /* Desktop home: the shop on a laptop-size shot, the till on a phone over its corner. */
+    .has-wide {
+      height: 440px;
+    }
+
+    .has-wide .wide {
+      display: block;
+      overflow: hidden;
+      height: 350px;
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      background: var(--slip);
+    }
+
+    .has-wide .wide :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+    }
+
+    .has-wide .phones {
+      position: absolute;
+      left: -36px;
+      top: 150px;
+      height: auto;
+      padding: 0;
+      overflow: visible;
+      background: none;
+    }
+
+    .has-wide .phones li {
+      width: 150px;
+      box-shadow: 0 16px 32px rgb(27 36 32 / 0.22);
+    }
+
+    .has-wide .phones li:first-child {
+      display: none;
+    }
+
+    .has-wide figcaption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
   }
 </style>

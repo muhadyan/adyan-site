@@ -1,0 +1,293 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import type { Copy, Lane, Locale } from "../content/types";
+import { LANE_SHOTS, lanePath } from "../data/lanes";
+import { OFFERS, rupiah } from "../data/offers";
+import { findShot } from "../data/work";
+import Header from "./Header.astro";
+import Hero from "./Hero.astro";
+import PriceCard from "./PriceCard.astro";
+import Faq from "./Faq.astro";
+import Footer from "./Footer.astro";
+import StickyWa from "./StickyWa.astro";
+
+interface Props {
+  locale: Locale;
+  copy: Copy;
+  lane: Lane;
+}
+
+const { locale, copy, lane } = Astro.props;
+const { price } = copy;
+const paths = { id: lanePath(lane.slug, "id"), en: lanePath(lane.slug, "en") };
+const from = OFFERS[lane.packages[0]!.offer].from;
+const phones = LANE_SHOTS[lane.slug].map((file) => findShot(file)!);
+const others = copy.lanes.items.filter((l) => l.slug !== lane.slug);
+---
+
+<Base locale={locale} meta={lane.meta} paths={paths} card={`${lane.slug}-${locale}`}>
+  <Header locale={locale} copy={copy} paths={paths} wa={lane.wa} lane={lane.slug} />
+  <main id="main">
+    <Hero
+      copy={copy}
+      locale={locale}
+      title={lane.hero.title}
+      ctaNote={lane.hero.ctaNote}
+      wa={lane.wa}
+      lane={lane.slug}
+      phones={phones}
+    >
+      <p>{lane.hero.lede}</p>
+      <p class="start">
+        <span class="from">{copy.lanes.from}</span>
+        <span class="total">{rupiah(from, locale)}</span>
+        <span class="scope">{lane.hero.scope}</span>
+        <span class="from">{price.finalShort}</span>
+      </p>
+    </Hero>
+
+    <section class="section" aria-labelledby="get-title">
+      <div class="wrap">
+        <h2 id="get-title">{price.heading}</h2>
+        <div class="slips">
+          {lane.packages.map((pkg) => <PriceCard pkg={pkg} from={price.from} locale={locale} />)}
+        </div>
+        <p class="final">{price.final}</p>
+        <h3>{price.allTitle}</h3>
+        <ul class="terms">
+          {price.all.map((term) => <li class="ruled">{term}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="problems-title">
+      <div class="wrap">
+        <h2 id="problems-title">{price.problemsTitle}</h2>
+        <ul class="problems">
+          {
+            lane.problems.map((p) => (
+              <li class="ruled">
+                <p class="need">{p.need}</p>
+                <p>{p.fix}</p>
+                <p class="proof">{p.proof}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <Faq title={price.faqTitle} items={lane.faq} />
+
+    <section class="section" aria-labelledby="other-title">
+      <div class="wrap">
+        <h2 id="other-title" class="small">{copy.lanes.other}</h2>
+        <ul class="others">
+          {
+            others.map((o) => {
+              const shot = findShot(LANE_SHOTS[o.slug][0])!;
+              return (
+                <li>
+                  <a
+                    href={lanePath(o.slug, locale)}
+                    data-umami-event="lane-open"
+                    data-umami-event-lane={o.slug}
+                  >
+                    <span class="phone-frame mini">
+                      <Image src={shot.image} alt="" widths={[100, 200]} sizes="72px" loading="lazy" />
+                    </span>
+                    <span class="other-text">
+                      <strong>{o.card.title}</strong>
+                      <span class="num">
+                        {copy.lanes.from} {rupiah(OFFERS[o.packages[0]!.offer].from, locale)}
+                      </span>
+                      <span class="more">{o.card.cta}</span>
+                    </span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer copy={copy} wa={lane.wa} lane={lane.slug} />
+  <StickyWa
+    label={copy.nav.contact}
+    price={`${copy.lanes.from} ${rupiah(from, locale, true)}`}
+    wa={lane.wa}
+    lane={lane.slug}
+  />
+</Base>
+
+<style>
+  .start {
+    display: grid;
+    justify-items: start;
+    margin-top: 16px;
+  }
+
+  .start .total {
+    font-size: 1.75rem;
+  }
+
+  .from {
+    color: var(--ink-soft);
+    font-size: 0.84375rem;
+  }
+
+  .scope {
+    margin-top: 8px;
+    font-size: 0.875rem;
+  }
+
+  h2 {
+    font-size: var(--step-3);
+  }
+
+  h2.small {
+    font-size: var(--step-2);
+  }
+
+  .slips {
+    display: grid;
+    gap: 24px;
+    margin-top: clamp(20px, 3vw, 32px);
+  }
+
+  @media (min-width: 720px) {
+    .slips {
+      grid-template-columns: repeat(auto-fit, minmax(0, 420px));
+    }
+  }
+
+  .final {
+    max-width: 40rem;
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+  }
+
+  h3 {
+    margin-top: 28px;
+    font-size: 1.1875rem;
+  }
+
+  .terms,
+  .problems,
+  .others {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .terms {
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 0.9375rem;
+  }
+
+  @media (min-width: 900px) {
+    .terms {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 32px;
+    }
+  }
+
+  .problems {
+    gap: 24px;
+    margin-top: clamp(16px, 3vw, 32px);
+  }
+
+  @media (min-width: 900px) {
+    .problems {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
+
+  .need {
+    font-weight: 600;
+  }
+
+  .problems p + p {
+    margin-top: 4px;
+  }
+
+  .proof {
+    color: var(--ink-soft);
+    font-size: 0.84375rem;
+  }
+
+  .others {
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  @media (min-width: 720px) {
+    .others {
+      grid-template-columns: repeat(2, minmax(0, 360px));
+    }
+  }
+
+  .others a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 112px;
+    padding: 8px;
+    background: var(--slip);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .others a:active {
+    transform: scale(0.98);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .others a:hover {
+      border-color: var(--ledger);
+      color: var(--ink);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .others a:active {
+      transform: none;
+    }
+  }
+
+  .mini {
+    flex: none;
+    width: 72px;
+    height: 96px;
+    border-width: 4px;
+    border-radius: 12px;
+  }
+
+  .mini :global(img) {
+    border-radius: 8px;
+  }
+
+  .other-text {
+    display: grid;
+    gap: 2px;
+  }
+
+  .other-text .num {
+    font-size: 0.875rem;
+  }
+
+  .more {
+    color: var(--ledger);
+    font-size: 0.9375rem;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+</style>

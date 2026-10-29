@@ -81,11 +81,13 @@ describe("laris claims", () => {
       .filter((w) => CLAIM.test(w) && !OFFLINE_SHOP.test(w));
   }
 
+  function larisProblems(copy: typeof id) {
+    return copy.lanes.items.flatMap((l) => l.problems).filter((p) => /Laris/.test(p.proof));
+  }
+
   function larisTexts(copy: typeof id): string[] {
     const item = copy.products.items.find((p) => p.slug === "admos-laris")!;
-    const rows = copy.needs.rows.filter((r) => r.proof === "Admos Laris");
-    const problems = copy.lanes.items.flatMap((l) => l.problems).filter((p) => /Laris/.test(p.proof));
-    return [...strings(item), ...rows.map((r) => r.build), ...problems.map((p) => p.fix)];
+    return [...strings(item), ...larisProblems(copy).map((p) => p.fix)];
   }
 
   it("never publishes shipping features", () => {
@@ -131,8 +133,9 @@ describe("laris claims", () => {
 
   it("does not credit Laris with invoices, returns or low-stock reminders", () => {
     for (const copy of [id, en]) {
-      const rows = copy.needs.rows.filter((r) => r.proof === "Admos Laris");
-      expect(rows.filter((r) => /faktur|retur|menipis|invoice|return|low-stock/i.test(r.build))).toEqual([]);
+      const fixes = larisProblems(copy).map((p) => p.fix);
+      expect(fixes.length).toBeGreaterThan(0);
+      expect(fixes.filter((f) => /faktur|retur|menipis|invoice|return|low-stock/i.test(f))).toEqual([]);
     }
   });
 

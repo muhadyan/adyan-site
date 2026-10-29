@@ -1,19 +1,20 @@
 ---
-import type { Copy } from "../content/types";
+import type { Faq } from "../content/types";
 
 interface Props {
-  faq: Copy["faq"];
+  title: string;
+  items: Faq[];
 }
 
-const { faq } = Astro.props;
+const { title, items } = Astro.props;
 ---
 
 <section class="section" aria-labelledby="faq-title">
   <div class="wrap grid">
-    <h2 id="faq-title">{faq.title}</h2>
+    <h2 id="faq-title">{title}</h2>
     <div class="items">
       {
-        faq.items.map((item) => (
+        items.map((item) => (
           <details>
             <summary>{item.q}</summary>
             <p>{item.a}</p>

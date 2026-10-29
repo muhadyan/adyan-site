@@ -22,6 +22,7 @@ const { process } = Astro.props;
             </span>
             <h3>{step.title}</h3>
             <p>{step.body}</p>
+            <p class="tag num">{step.tag}</p>
           </li>
         ))
       }
@@ -69,5 +70,11 @@ const { process } = Astro.props;
 
   p {
     color: var(--ink-soft);
+  }
+
+  .tag {
+    color: var(--ledger);
+    font-size: 0.8125rem;
+    font-weight: 600;
   }
 </style>

@@ -57,12 +57,6 @@ export type Copy = {
     faqTitle: string;
   };
   proof: Figure[];
-  needs: {
-    title: string;
-    intro: string;
-    columns: { need: string; build: string; proof: string };
-    rows: { need: string; build: string; proof: string }[];
-  };
   products: {
     title: string;
     intro: string;

@@ -172,8 +172,8 @@ export const en: Copy = {
           cta: "See the bookkeeping package",
         },
         hero: {
-          title: "Financial reports that build themselves from your transactions.",
-          lede: "Journal, profit and loss, balance sheet and cash flow, done automatically. For bigger businesses, a Finance, HR and GA ERP is built module by module.",
+          title: "Financial reports that build themselves from your sales.",
+          lede: "Journal, profit and loss, balance sheet and cash flow, done automatically. ERP for Finance, HR and GA, module by module.",
           scope: "for 1-3 branches, opening data imported from Excel",
           ctaNote: "Send a sample report or the spreadsheet you use now, and I’ll reply with an estimated cost and timeline.",
         },
@@ -258,53 +258,6 @@ export const en: Copy = {
     { value: "3", label: "systems running at Ummu Alfatih since 2025" },
     { value: "90 days", label: "bug warranty on every package" },
   ],
-  needs: {
-    title: "Your problem, the system, the proof",
-    intro: "These are the needs I hear most often. I have already built every row.",
-    columns: { need: "Your problem", build: "What I build", proof: "Proof" },
-    rows: [
-      {
-        need: "Sales still go on paper receipts",
-        build: "A web POS. Every sale is recorded, receipts print, cancelled orders still leave a trail.",
-        proof: "Admos Laris",
-      },
-      {
-        need: "Warehouse stock never matches",
-        build: "Stock per product that drops when an order is paid and never blocks a sale, a QR label for every variant.",
-        proof: "Admos Laris",
-      },
-      {
-        need: "Financial reports take all of month-end",
-        build: "Automatic bookkeeping. Journal, profit and loss, balance sheet and cash flow straight from transactions.",
-        proof: "Admos Accounting",
-      },
-      {
-        need: "Orders from chats are a mess",
-        build: "WhatsApp and DM orders made tidy. AI reads the address, shipping rates are compared, waybills are tracked.",
-        proof: "RingkasAja",
-      },
-      {
-        need: "One system for Finance, HR and GA",
-        build: "An ERP that follows how your office works. Finance, people, assets and approvals in one place.",
-        proof: "5+ years leading Finance, HR, GA",
-      },
-      {
-        need: "Clients keep asking about project progress",
-        build: "A project tracker. Status per stage, automatic client updates, full history.",
-        proof: "Software engineer since 2022",
-      },
-      {
-        need: "A company or catalog website",
-        build: "A fast website that is easy to update and easy to find on Google.",
-        proof: "The site you are reading",
-      },
-      {
-        need: "The old system is slow or keeps failing",
-        build: "Audits, bug fixes and rebuilds under the hood without stopping what already runs.",
-        proof: "Search Array, 5x faster",
-      },
-    ],
-  },
   products: {
     title: "Products I built myself",
     intro: "I designed, built and run these three products myself, from zero to live.",

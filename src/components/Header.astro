@@ -1,31 +1,37 @@
 ---
 import { SITE, waLink } from "../config";
+import { BUSINESS } from "../data/business";
 import type { Copy, Locale } from "../content/types";
 import WaIcon from "./WaIcon.astro";
 
 interface Props {
   locale: Locale;
   copy: Copy;
+  paths: Record<Locale, string>;
+  wa: string;
+  lane: string;
 }
 
-const { locale, copy } = Astro.props;
-const langs: { code: Locale; label: string; href: string }[] = [
-  { code: "id", label: "ID", href: "/" },
-  { code: "en", label: "EN", href: "/en/" },
+const { locale, copy, paths, wa, lane } = Astro.props;
+const langs: { code: Locale; label: string }[] = [
+  { code: "id", label: "ID" },
+  { code: "en", label: "EN" },
 ];
 ---
 
 <a class="skip" href="#main">{copy.nav.skip}</a>
 <header class="header">
   <div class="wrap header-inner">
-    <a class="name" href={locale === "id" ? "/" : "/en/"}>{SITE.name}</a>
+    <a class="name" href={locale === "id" ? "/" : "/en/"}>
+      {SITE.name}<span class="brand"> · {BUSINESS.name}</span>
+    </a>
     <nav class="tools" aria-label={copy.nav.langLabel}>
       <ul class="langs">
         {
           langs.map((lang) => (
             <li>
               <a
-                href={lang.href}
+                href={paths[lang.code]}
                 hreflang={lang.code}
                 lang={lang.code}
                 aria-current={lang.code === locale ? "page" : undefined}
@@ -37,15 +43,16 @@ const langs: { code: Locale; label: string; href: string }[] = [
         }
       </ul>
       <a
-        class="button header-cta"
-        href={waLink(copy.wa.message)}
+        class="header-cta"
+        href={waLink(wa)}
         rel="noopener"
         target="_blank"
         data-umami-event="wa-click"
         data-umami-event-spot="header"
+        data-umami-event-lane={lane}
       >
         <WaIcon />
-        <span class="header-cta-label">{copy.nav.contact}</span>
+        {copy.nav.contact}
       </a>
     </nav>
   </div>
@@ -65,17 +72,35 @@ const langs: { code: Locale; label: string; href: string }[] = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    min-height: 64px;
+    gap: 12px;
+    min-height: 56px;
+  }
+
+  @media (min-width: 720px) {
+    .header-inner {
+      min-height: 64px;
+    }
   }
 
   .name {
     color: var(--ink);
+    font-size: 0.9375rem;
     font-weight: 700;
     font-variation-settings: "wdth" 118;
     letter-spacing: -0.01em;
     text-decoration: none;
     white-space: nowrap;
+  }
+
+  @media (min-width: 720px) {
+    .name {
+      font-size: var(--step-0);
+    }
+  }
+
+  .brand {
+    color: var(--ink-soft);
+    font-weight: 500;
   }
 
   .tools {
@@ -94,43 +119,50 @@ const langs: { code: Locale; label: string; href: string }[] = [
   }
 
   .langs a {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 36px;
-    padding: 8px 6px;
+    min-height: 36px;
     color: var(--ink-soft);
-    text-align: center;
     text-decoration: none;
     border-radius: 4px;
   }
 
-  .langs a:active {
-    color: var(--ink);
-    background: var(--paper-deep);
-  }
-
+  .langs a:active,
   .langs a[aria-current="page"] {
     color: var(--ink);
     background: var(--paper-deep);
   }
 
+  /* Phones get the sticky bottom bar instead, so the header stays one quiet line. */
   .header-cta {
-    min-height: 40px;
-    padding: 8px 16px;
-    font-size: 0.9375rem;
+    display: none;
   }
 
-  @media (max-width: 519px) {
+  @media (min-width: 720px) {
     .header-cta {
-      padding: 8px 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 16px;
+      border: 1px solid var(--ledger);
+      border-radius: var(--radius);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 160ms var(--ease-out);
     }
 
-    .header-cta-label {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
+    .header-cta:active {
+      transform: scale(0.97);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-cta:active {
+      transform: none;
     }
   }
 </style>

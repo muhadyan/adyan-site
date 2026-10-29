@@ -240,3 +240,48 @@ a:active {
   clip: rect(0 0 0 0);
   white-space: nowrap;
 }
+
+/* A phone screenshot in a dark phone frame. */
+.phone-frame {
+  overflow: hidden;
+  border: 6px solid var(--ink);
+  border-radius: 22px;
+  background: var(--ink);
+}
+
+.phone-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 16px;
+}
+
+/* A total: the accountant's double underline. */
+.total {
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 3px double var(--ink);
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--ledger-tint);
+  color: var(--ledger-deep);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* A short entry with the ledger's double rule on its left. */
+.ruled {
+  padding-left: 14px;
+  border-left: 3px double var(--ledger);
+}

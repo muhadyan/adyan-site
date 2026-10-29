@@ -1,0 +1,86 @@
+---
+import type { Copy } from "../content/types";
+import { WORK } from "../data/work";
+
+interface Props {
+  showcase: Copy["showcase"];
+  /** One "worked at" line instead of the full client list (Indonesian page). */
+  compact: boolean;
+}
+
+const { showcase, compact } = Astro.props;
+const { testimonial } = showcase;
+---
+
+<section class="section" aria-labelledby="showcase-title">
+  <div class="wrap grid">
+    <h2 id="showcase-title">{showcase.title}</h2>
+    <div class="body">
+      <p>{showcase.body}</p>
+      {
+        testimonial.approved && (
+          <blockquote>
+            <p>“{testimonial.quote}”</p>
+            <footer>{testimonial.by}</footer>
+          </blockquote>
+        )
+      }
+      <a href={WORK["ummu-alfatih"]!.url} rel="noopener" target="_blank">{showcase.visit}</a>
+      {compact && <p class="worked">{showcase.workedAt}</p>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      gap: 64px;
+    }
+  }
+
+  h2 {
+    font-size: var(--step-3);
+    max-width: 20ch;
+  }
+
+  .body {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+    max-width: 40rem;
+  }
+
+  blockquote {
+    margin: 0;
+    padding-left: 16px;
+    border-left: 3px double var(--ledger);
+  }
+
+  blockquote p {
+    font-size: var(--step-1);
+    line-height: 1.45;
+  }
+
+  blockquote footer {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 0.875rem;
+  }
+
+  .body a {
+    font-weight: 600;
+  }
+
+  .worked {
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+    font-size: 0.9375rem;
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+import LanePage from "../../components/LanePage.astro";
+import { en } from "../../content/en";
+
+export function getStaticPaths() {
+  return en.lanes.items.map((lane) => ({ params: { lane: lane.slug }, props: { lane } }));
+}
+
+const { lane } = Astro.props;
+---
+
+<LanePage locale="en" copy={en} lane={lane} />
