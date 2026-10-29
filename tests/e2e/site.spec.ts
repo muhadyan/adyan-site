@@ -2,8 +2,12 @@ import { expect, test } from "@playwright/test";
 import { SITE } from "../../src/config";
 
 const PAGES = [
-  { path: "/", lang: "id", toggle: "EN", other: "/en/" },
-  { path: "/en/", lang: "en", toggle: "ID", other: "/" },
+  { path: "/", lang: "id", toggle: "EN", other: "/en/", lane: "home" },
+  { path: "/en/", lang: "en", toggle: "ID", other: "/", lane: "home" },
+  ...["website", "kasir", "pembukuan"].flatMap((lane) => [
+    { path: `/${lane}/`, lang: "id", toggle: "EN", other: `/en/${lane}/`, lane },
+    { path: `/en/${lane}/`, lang: "en", toggle: "ID", other: `/${lane}/`, lane },
+  ]),
 ];
 
 for (const p of PAGES) {
@@ -21,7 +25,7 @@ for (const p of PAGES) {
       const links = page.locator('a[href^="https://wa.me/"]');
       expect(await links.count()).toBeGreaterThanOrEqual(2);
       for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute("href")))) {
-        expect(href).toMatch(/^https:\/\/wa\.me\/6285717913273\?text=.+/);
+        expect(href).toMatch(new RegExp(`^https://wa\\.me/${SITE.whatsapp}\\?text=.+`));
       }
     });
 
@@ -31,15 +35,28 @@ for (const p of PAGES) {
       await expect(tracker).toHaveAttribute("data-domains", "adyan.admos.id");
     });
 
-    test("tracks every WhatsApp button click with its spot", async ({ page }) => {
+    test("tracks every WhatsApp button click with its spot and lane", async ({ page }) => {
       const spots = await page
         .locator('a[href^="https://wa.me/"]')
-        .evaluateAll((els) => els.map((e) => [e.getAttribute("data-umami-event"), e.getAttribute("data-umami-event-spot")]));
-      expect(spots).toEqual([
-        ["wa-click", "header"],
-        ["wa-click", "hero"],
-        ["wa-click", "footer"],
-      ]);
+        .evaluateAll((els) =>
+          els.map((e) => [
+            e.getAttribute("data-umami-event"),
+            e.getAttribute("data-umami-event-spot"),
+            e.getAttribute("data-umami-event-lane"),
+          ]),
+        );
+      expect(spots).toEqual(
+        ["header", "hero", "footer", "sticky"].map((spot) => ["wa-click", spot, p.lane]),
+      );
+    });
+
+    test("prefills the same WhatsApp message on every button of the page", async ({ page }) => {
+      const hrefs = await page
+        .locator('a[href^="https://wa.me/"]')
+        .evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+      expect(new Set(hrefs).size).toBe(1);
+      const text = new URL(hrefs[0]!).searchParams.get("text") ?? "";
+      if (p.lane !== "home") expect(text).toMatch(p.lane === "kasir" ? /kasir|POS/ : new RegExp(p.lane === "website" ? "website" : "pembukuan|bookkeeping"));
     });
 
     // Umami sends same-tab links with location.href, which drops "download",
@@ -63,30 +80,17 @@ for (const p of PAGES) {
       expect(overflow).toBeLessThanOrEqual(0);
     });
 
-    // On phones the needs table stacks and its header row is hidden, so each
-    // part of a row carries its own label, worded like the column header.
-    test("labels each part of a needs row on phones", async ({ page }, testInfo) => {
-      const section = page.locator('section[aria-labelledby="needs-title"]');
-      const headers = await section.locator("thead th").allTextContents();
-      const labels = section.locator("tbody tr").first().locator(".cell-label");
-      if (testInfo.project.name === "mobile") {
-        await expect(labels).toHaveCount(headers.length);
-        // Guards the proof tag style against losing to the scoped table resets.
-        const proofBg = await section.locator("tbody .proof").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-        expect(proofBg).not.toBe("rgba(0, 0, 0, 0)");
-        for (const [i, header] of headers.entries()) {
-          await expect(labels.nth(i)).toBeVisible();
-          expect((await labels.nth(i).textContent())?.replace(":", "").trim()).toBe(header.trim());
-        }
-      } else {
-        await expect(section.locator("thead")).toBeVisible();
-        for (const label of await labels.all()) await expect(label).toBeHidden();
-      }
-    });
-
+    // Images inside a link with its own text are decorative (alt=""); every other image needs words.
     test("gives every image alt text", async ({ page }) => {
       const missing = await page.locator("img").evaluateAll((imgs) =>
-        imgs.filter((img) => !img.getAttribute("alt")?.trim()).map((img) => img.getAttribute("src")),
+        imgs
+          .filter((img) => {
+            const alt = img.getAttribute("alt");
+            if (alt === null) return true;
+            const link = img.closest("a");
+            return !alt.trim() && !(link && link.textContent?.trim());
+          })
+          .map((img) => img.getAttribute("src")),
       );
       expect(missing).toEqual([]);
     });
@@ -109,7 +113,7 @@ for (const p of PAGES) {
     test("sets an absolute Open Graph image for link previews", async ({ page }) => {
       await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
         "content",
-        /^https:\/\/adyan\.admos\.id\/og-(id|en)\.png$/,
+        new RegExp(`^https://adyan\\.admos\\.id/og-${p.lane === "home" ? "" : `${p.lane}-`}${p.lang}\\.png$`),
       );
     });
   });
@@ -145,6 +149,38 @@ for (const p of PAGES) {
     }
   });
 }
+
+// Phones get a bottom WhatsApp bar, but never next to another WhatsApp button.
+for (const path of ["/", "/kasir/"]) {
+  test(`shows the phone WhatsApp bar only between the hero and footer buttons at ${path}`, async ({ page }, testInfo) => {
+    const bar = page.locator(".sticky-wa");
+    await page.goto(path);
+    if (testInfo.project.name !== "mobile") {
+      await expect(bar).toBeHidden();
+      return;
+    }
+    await expect(bar).not.toHaveAttribute("data-shown");
+    await page.locator("#faq-title").scrollIntoViewIfNeeded();
+    await expect(bar).toHaveAttribute("data-shown", "");
+    await expect(bar).toBeInViewport();
+    await page.locator(".footer .cta .button").scrollIntoViewIfNeeded();
+    await expect(bar).not.toHaveAttribute("data-shown");
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(bar).not.toHaveAttribute("data-shown");
+  });
+}
+
+test("home lane cards open each lane page", async ({ page }) => {
+  await page.goto("/");
+  const hrefs = await page.locator('a[data-umami-event="lane-open"]').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+  expect(hrefs).toEqual(["/website/", "/kasir/", "/pembukuan/"]);
+});
+
+test("shows the bookkeeping and ERP packages with their starting prices", async ({ page }) => {
+  await page.goto("/pembukuan/");
+  await expect(page.getByRole("article", { name: "Paket Pembukuan" })).toContainText("Rp10 juta");
+  await expect(page.getByRole("article", { name: "Paket ERP" })).toContainText("Rp25 juta");
+});
 
 // Google's OAuth consent screen links here (Gmail send-only app for pitch emails).
 test("privacy page explains the email tool and names a contact", async ({ page }) => {

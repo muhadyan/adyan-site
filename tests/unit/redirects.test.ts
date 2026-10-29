@@ -28,4 +28,15 @@ describe("_redirects", () => {
   it("sends /p/<code> home with the code as utm_content", () => {
     expect(rules).toContainEqual(["/p/:code", "/?utm_source=threads&utm_medium=pitch&utm_content=:code", "302"]);
   });
+
+  // Pitch links land on the page for what the post asked about (/website/k7x2).
+  for (const lane of ["website", "kasir", "pembukuan"]) {
+    it(`sends /${lane}/<code> to the ${lane} page with the code as utm_content`, () => {
+      expect(rules).toContainEqual([
+        `/${lane}/:code`,
+        `/${lane}/?utm_source=threads&utm_medium=pitch&utm_content=:code`,
+        "302",
+      ]);
+    });
+  }
 });

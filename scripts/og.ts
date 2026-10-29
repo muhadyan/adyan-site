@@ -1,4 +1,4 @@
-// Builds the link-preview images from the /og/<lang>/ pages.
+// Builds the link-preview images from the /og/<card>/ pages.
 // Usage: bun run og   (needs `bun run dev` running on port 4321)
 import { chromium } from "@playwright/test";
 
@@ -7,10 +7,11 @@ const OUT = new URL("../public/", import.meta.url).pathname;
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
-for (const lang of ["id", "en"]) {
-  await page.goto(`${BASE}/og/${lang}/`, { waitUntil: "networkidle" });
+const CARDS = ["id", "en", ...["website", "kasir", "pembukuan"].flatMap((lane) => [`${lane}-id`, `${lane}-en`])];
+for (const card of CARDS) {
+  await page.goto(`${BASE}/og/${card}/`, { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
-  await page.screenshot({ path: `${OUT}og-${lang}.png` });
-  console.log(`saved public/og-${lang}.png`);
+  await page.screenshot({ path: `${OUT}og-${card}.png` });
+  console.log(`saved public/og-${card}.png`);
 }
 await browser.close();

@@ -1,6 +1,29 @@
+import type { OfferKey } from "../data/offers";
+
 export type Locale = "id" | "en";
 
 export type Figure = { value: string; label: string };
+
+export type Faq = { q: string; a: string };
+
+/** A service lane with its own page: /website/, /kasir/, /pembukuan/. */
+export type LaneSlug = "website" | "kasir" | "pembukuan";
+
+/** One "Yang kamu dapat" card. The price comes from OFFERS[offer]. */
+export type Package = { offer: OfferKey; title: string; lines: string[]; notes: string[] };
+
+export type Lane = {
+  slug: LaneSlug;
+  meta: { title: string; description: string };
+  /** Prefilled WhatsApp message for this lane. */
+  wa: string;
+  /** The lane's card on the home page and under "Layanan lain". */
+  card: { title: string; body: string; cta: string };
+  hero: { title: string; lede: string; scope: string; ctaNote: string };
+  packages: Package[];
+  problems: { need: string; fix: string; proof: string }[];
+  faq: Faq[];
+};
 
 export type Copy = {
   meta: { title: string; description: string };
@@ -8,27 +31,32 @@ export type Copy = {
   wa: { message: string };
   hero: {
     title: string;
-    lede: string;
-    proof: string;
+    /** "Website mulai **Rp2,5 juta**." One item per sentence, price in bold. */
+    lede: { text: string; price: string }[];
     cta: string;
     ctaNote: string;
-    receipt: {
-      heading: string;
-      number: string;
-      to: string;
-      lines: string[];
-      totalLabel: string;
-      total: string;
-      stamp: string;
-      thanks: string;
-    };
+    chip: string;
+    reply: string;
+    hours: string;
+    shotsCaption: string;
   };
-  needs: {
+  lanes: {
     title: string;
-    intro: string;
-    columns: { need: string; build: string; proof: string };
-    rows: { need: string; build: string; proof: string }[];
+    other: string;
+    from: string;
+    items: Lane[];
   };
+  price: {
+    heading: string;
+    from: string;
+    final: string;
+    finalShort: string;
+    allTitle: string;
+    all: string[];
+    problemsTitle: string;
+    faqTitle: string;
+  };
+  proof: Figure[];
   products: {
     title: string;
     intro: string;
@@ -45,6 +73,13 @@ export type Copy = {
       stack: string[];
     }[];
   };
+  showcase: {
+    title: string;
+    body: string;
+    visit: string;
+    testimonial: { quote: string; by: string };
+    workedAt: string;
+  };
   clients: {
     title: string;
     intro: string;
@@ -60,12 +95,11 @@ export type Copy = {
     othersTitle: string;
     others: { name: string; note: string }[];
   };
-  why: { title: string; story: string[]; figures: Figure[]; photoAlt: string };
-  process: { title: string; steps: { title: string; body: string }[] };
-  faq: { title: string; items: { q: string; a: string }[] };
+  why: { title: string; story: string[]; photoAlt: string };
+  process: { title: string; steps: { title: string; body: string; tag: string }[] };
+  faq: { title: string; items: Faq[] };
   footer: {
     title: string;
-    body: string;
     cta: string;
     email: string;
     visit: string;

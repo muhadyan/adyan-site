@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { SITE } from "../../src/config";
 import { BUSINESS, mapEmbedUrl, siteJsonLd } from "../../src/data/business";
+import { OFFERS } from "../../src/data/offers";
 
 type Node = Record<string, unknown>;
 
@@ -33,8 +34,11 @@ describe("BUSINESS", () => {
     expect(BUSINESS.geo.lng).toBeLessThan(110.9);
   });
 
-  it("shows the WhatsApp number as a local phone number", () => {
-    expect(BUSINESS.phoneDisplay.replace(/\D/g, "")).toBe(`0${SITE.whatsapp.slice(2)}`);
+  // The Maps listing keeps this number until its verification is done, even
+  // after the WhatsApp buttons move to the business number (SITE.whatsapp).
+  it("shows the Maps phone number as a local phone number", () => {
+    expect(BUSINESS.phone).toMatch(/^62\d{8,13}$/);
+    expect(BUSINESS.phoneDisplay.replace(/\D/g, "")).toBe(`0${BUSINESS.phone.slice(2)}`);
   });
 });
 
@@ -49,7 +53,7 @@ describe("siteJsonLd", () => {
   it("adds a ProfessionalService node that matches the Maps listing", () => {
     const biz = node("ProfessionalService");
     expect(biz.name).toBe("Admos ERP");
-    expect(biz.telephone).toBe(`+${SITE.whatsapp}`);
+    expect(biz.telephone).toBe(`+${BUSINESS.phone}`);
     expect(biz.founder).toEqual({ "@id": `${SITE.url}/#person` });
     expect(biz.address).toMatchObject({
       "@type": "PostalAddress",
@@ -72,6 +76,22 @@ describe("siteJsonLd", () => {
     const areas = node("ProfessionalService").areaServed as Node[];
     expect(areas).toHaveLength(8);
     expect(areas.map((a) => a.name)).toContain("Kabupaten Sleman");
+  });
+
+  // Same "mulai dari" prices as the page and the Maps services.
+  it("lists every offer with its starting price in rupiah", () => {
+    const catalog = node("ProfessionalService").hasOfferCatalog as Node;
+    const offers = catalog.itemListElement as Node[];
+    expect(offers).toHaveLength(Object.keys(OFFERS).length);
+    for (const [key, offer] of Object.entries(OFFERS)) {
+      const found = offers.find((o) => (o.itemOffered as Node).name === offer.name.id);
+      expect(found, key).toBeDefined();
+      expect(found!.priceSpecification).toEqual({
+        "@type": "PriceSpecification",
+        minPrice: offer.from,
+        priceCurrency: "IDR",
+      });
+    }
   });
 
   it("escapes '<' so no value can close the script tag", () => {

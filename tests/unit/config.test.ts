@@ -4,12 +4,12 @@ import { SITE, waLink } from "../../src/config";
 describe("waLink", () => {
   it("builds a wa.me link with the encoded message", () => {
     expect(waLink("Halo kak, mau tanya sistem stok & kasir?")).toBe(
-      "https://wa.me/6285717913273?text=Halo%20kak%2C%20mau%20tanya%20sistem%20stok%20%26%20kasir%3F",
+      `https://wa.me/${SITE.whatsapp}?text=Halo%20kak%2C%20mau%20tanya%20sistem%20stok%20%26%20kasir%3F`,
     );
   });
 
   it("omits the text param when the message is empty", () => {
-    expect(waLink("")).toBe("https://wa.me/6285717913273");
+    expect(waLink("")).toBe(`https://wa.me/${SITE.whatsapp}`);
   });
 });
 

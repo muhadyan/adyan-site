@@ -7,9 +7,11 @@ import Figures from "./Figures.astro";
 interface Props {
   clients: Copy["clients"];
   locale: Locale;
+  /** Clients already shown higher up the page. */
+  skip?: string[];
 }
 
-const { clients, locale } = Astro.props;
+const { clients, locale, skip = [] } = Astro.props;
 ---
 
 <section class="section" aria-labelledby="clients-title">
@@ -20,7 +22,7 @@ const { clients, locale } = Astro.props;
     </div>
     <ul class="list">
       {
-        clients.featured.map((client) => {
+        clients.featured.filter((c) => !skip.includes(c.slug)).map((client) => {
           const work = WORK[client.slug]!;
           const shot = work.shots[0];
           return (

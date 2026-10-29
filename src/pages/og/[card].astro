@@ -1,0 +1,150 @@
+---
+// Renders the 1200x630 link-preview cards. `bun run og` screenshots each into
+// public/og-<card>.png (home: og-id, og-en; lanes: og-website-id ...). Not linked, not indexed.
+import { Image } from "astro:assets";
+import "../../styles/global.css";
+import { SITE } from "../../config";
+import { en } from "../../content/en";
+import { id } from "../../content/id";
+import type { Copy, Locale } from "../../content/types";
+import { BUSINESS } from "../../data/business";
+import { HERO_SHOTS, LANE_SHOTS } from "../../data/lanes";
+import { OFFERS, rupiah } from "../../data/offers";
+import { findShot } from "../../data/work";
+import portrait from "../../assets/profile/adyan.jpg";
+
+type Card = { title: string; prices: string[]; shot: string };
+
+function cards(locale: Locale, copy: Copy): [string, Card][] {
+  const home: Card = {
+    title: copy.hero.title,
+    prices: copy.hero.lede.map((l) => `${l.text} ${l.price}`),
+    shot: HERO_SHOTS.phones[0],
+  };
+  const lanes = copy.lanes.items.map((lane): [string, Card] => [
+    `${lane.slug}-${locale}`,
+    {
+      title: lane.hero.title,
+      prices: lane.packages.map((p) => `${p.title} ${copy.lanes.from} ${rupiah(OFFERS[p.offer].from, locale)}`),
+      shot: LANE_SHOTS[lane.slug][0],
+    },
+  ]);
+  return [[locale, home], ...lanes];
+}
+
+const ALL = new Map([...cards("id", id), ...cards("en", en)]);
+
+export function getStaticPaths() {
+  const lanes = id.lanes.items.flatMap((lane) => [`${lane.slug}-id`, `${lane.slug}-en`]);
+  return ["id", "en", ...lanes].map((card) => ({ params: { card } }));
+}
+
+const card = ALL.get(Astro.params.card!)!;
+const shot = findShot(card.shot)!;
+---
+
+<!doctype html>
+<html lang={Astro.params.card!.slice(-2)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>OG</title>
+  </head>
+  <body>
+    <main class="card">
+      <div class="text">
+        <p class="name">{SITE.name}<span> · {BUSINESS.name}</span></p>
+        <h1>{card.title}</h1>
+        <ul class="prices num">
+          {card.prices.map((p) => <li>{p}</li>)}
+        </ul>
+        <p class="url num">adyan.admos.id</p>
+      </div>
+      <div class="visual">
+        <div class="phone-frame"><Image src={shot.image} alt="" widths={[600]} sizes="300px" /></div>
+        <Image src={portrait} alt="" widths={[240]} sizes="120px" class="face" />
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    align-items: center;
+    height: 100%;
+    padding: 0 72px;
+    border-bottom: 14px solid var(--ledger);
+  }
+
+  .text {
+    display: grid;
+    gap: 24px;
+  }
+
+  .name {
+    font-weight: 700;
+    font-size: 26px;
+    font-variation-settings: "wdth" 118;
+  }
+
+  .name span {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  h1 {
+    font-size: 54px;
+    font-variation-settings: "wdth" 125;
+    line-height: 1.04;
+  }
+
+  .prices {
+    display: grid;
+    gap: 6px;
+    padding: 0;
+    list-style: none;
+    font-size: 22px;
+  }
+
+  .url {
+    color: var(--ledger);
+    font-size: 22px;
+  }
+
+  .visual {
+    position: relative;
+    align-self: start;
+    height: 616px;
+    padding-top: 56px;
+    overflow: hidden;
+  }
+
+  .phone-frame {
+    width: 300px;
+    height: 640px;
+    margin-left: 40px;
+    border-width: 8px;
+    border-radius: 32px;
+  }
+
+  .visual :global(.face) {
+    position: absolute;
+    left: 0;
+    top: 380px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 22%;
+    border: 4px solid var(--paper);
+  }
+</style>

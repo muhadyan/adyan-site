@@ -2,18 +2,21 @@
 import "../styles/global.css";
 import { SITE } from "../config";
 import { siteJsonLd } from "../data/business";
-import type { Copy, Locale } from "../content/types";
+import type { Locale } from "../content/types";
 
 interface Props {
   locale: Locale;
-  copy: Copy;
+  meta: { title: string; description: string };
+  /** This page in each language, e.g. { id: "/kasir/", en: "/en/kasir/" }. */
+  paths: Record<Locale, string>;
+  /** Link-preview card name: og-<card>.png. */
+  card: string;
   noindex?: boolean;
 }
 
-const { locale, copy, noindex = false } = Astro.props;
-const path = locale === "id" ? "/" : "/en/";
-const canonical = new URL(path, SITE.url).href;
-const ogImage = new URL(`/og-${locale}.png`, SITE.url).href;
+const { locale, meta, paths, card, noindex = false } = Astro.props;
+const canonical = new URL(paths[locale], SITE.url).href;
+const ogImage = new URL(`/og-${card}.png`, SITE.url).href;
 
 const jsonLd = siteJsonLd();
 ---
@@ -23,21 +26,21 @@ const jsonLd = siteJsonLd();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{copy.meta.title}</title>
-    <meta name="description" content={copy.meta.description} />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
     <meta name="theme-color" content="#f2f4ef" />
     <meta name="google-site-verification" content={SITE.googleSiteVerification} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
-    <link rel="alternate" hreflang="id" href={new URL("/", SITE.url).href} />
-    <link rel="alternate" hreflang="en" href={new URL("/en/", SITE.url).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL("/", SITE.url).href} />
+    <link rel="alternate" hreflang="id" href={new URL(paths.id, SITE.url).href} />
+    <link rel="alternate" hreflang="en" href={new URL(paths.en, SITE.url).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(paths.id, SITE.url).href} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={copy.meta.title} />
-    <meta property="og:description" content={copy.meta.description} />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
