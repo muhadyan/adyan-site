@@ -6,3 +6,7 @@
 /p/:code  /?utm_source=threads&utm_medium=pitch&utm_content=:code  302
 /b   /?utm_source=threads&utm_medium=bio    302
 /b.  /?utm_source=threads&utm_medium=bio    302
+# /<lane>/<code>: a pitch link that lands on the page for what the post asked about.
+/website/:code    /website/?utm_source=threads&utm_medium=pitch&utm_content=:code    302
+/kasir/:code      /kasir/?utm_source=threads&utm_medium=pitch&utm_content=:code      302
+/pembukuan/:code  /pembukuan/?utm_source=threads&utm_medium=pitch&utm_content=:code  302

@@ -2,7 +2,7 @@ import type { ImageMetadata } from "astro";
 import type { Locale } from "../content/types";
 
 /** `phone` marks a portrait mobile capture, shown in a phone frame. */
-export type Shot = { image: ImageMetadata; alt: Record<Locale, string>; phone?: boolean };
+export type Shot = { file: string; image: ImageMetadata; alt: Record<Locale, string>; phone?: boolean };
 export type Work = { url: string; shots: Shot[] };
 
 // Every screenshot in src/assets/work. Optional shots (for example the Laris
@@ -22,7 +22,7 @@ type ShotSpec = { file: string; alt: Record<Locale, string>; phone?: boolean };
 function shots(specs: ShotSpec[]): Shot[] {
   return specs.flatMap(({ file, alt, phone }) => {
     const image = find(file);
-    return image ? [{ image, alt, ...(phone ? { phone } : {}) }] : [];
+    return image ? [{ file, image, alt, ...(phone ? { phone } : {}) }] : [];
   });
 }
 
@@ -168,6 +168,22 @@ export const WORK: Record<string, Work> = {
           en: "Ummu Alfatih online shop catalogue: outerwear, khiban and khimar at sale prices",
         },
       },
+      {
+        file: "ummu-alfatih-produk-mobile",
+        phone: true,
+        alt: {
+          id: "Halaman produk toko online Ummu Alfatih di HP: foto, harga, pilihan warna, dan tombol Tambah Ke Keranjang",
+          en: "Ummu Alfatih product page on a phone: photo, price, colour choices and the add-to-cart button",
+        },
+      },
+      {
+        file: "ummu-alfatih-mobile",
+        phone: true,
+        alt: {
+          id: "Beranda toko online Ummu Alfatih di HP dengan banner promo",
+          en: "Ummu Alfatih online shop home page on a phone with a sale banner",
+        },
+      },
     ]),
   },
   "search-array": {
@@ -207,3 +223,10 @@ export const WORK: Record<string, Work> = {
     ]),
   },
 };
+
+/** A screenshot by file name, from any project. */
+export function findShot(file: string): Shot | undefined {
+  return Object.values(WORK)
+    .flatMap((w) => w.shots)
+    .find((s) => s.file === file);
+}
