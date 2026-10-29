@@ -63,7 +63,7 @@ html {
 /* Phones: the sticky WhatsApp bar (56px) never covers a focused or scrolled-to element. */
 @media (max-width: 719px) {
   html {
-    scroll-padding-bottom: 64px;
+    scroll-padding-bottom: calc(64px + env(safe-area-inset-bottom));
   }
 }
 

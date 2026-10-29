@@ -4,6 +4,7 @@ import type { Locale } from "../content/types";
  * "Mulai dari" (starting) prices, decided 2026-10-29. One source for the page,
  * the JSON-LD and the Maps services list, so they never disagree.
  * Prices go on the site, Maps, bio and ads only, never in pitch messages.
+ * After a change: run `bun run og` (the link-preview PNGs show these prices) and update the Maps services.
  */
 export const OFFERS = {
   website: { from: 2_500_000, name: { id: "Website usaha", en: "Business website" } },
