@@ -1,7 +1,8 @@
 export const SITE = {
   url: "https://adyan.admos.id",
   name: "Adyan Rohutomo",
-  whatsapp: "6285717913273",
+  // WhatsApp Business number for every WhatsApp button. The Maps phone (BUSINESS.phone) stays 0857.
+  whatsapp: "6282138735653",
   email: "madyanr@gmail.com",
   github: "https://github.com/muhadyan",
   linkedin: "https://www.linkedin.com/in/adyan-rohutomo",
