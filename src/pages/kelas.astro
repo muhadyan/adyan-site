@@ -1,0 +1,41 @@
+---
+// Sign-up page of the free "AI untuk Kerja" class (Sat 12 Dec 2026). Indonesian only.
+// Visitors come from Meta ads and the Instagram, Threads and TikTok bios; no other page links here yet.
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import KelasHeader from "../components/kelas/KelasHeader.astro";
+import KelasHero from "../components/kelas/KelasHero.astro";
+import Pair from "../components/kelas/Pair.astro";
+import Trainer from "../components/kelas/Trainer.astro";
+import Steps from "../components/kelas/Steps.astro";
+import KelasBottom from "../components/kelas/KelasBottom.astro";
+import StickyDaftar from "../components/kelas/StickyDaftar.astro";
+import { KELAS } from "../config";
+import { kelas } from "../content/kelas";
+import { kelasClosed } from "../lib/kelas";
+
+// Build-time state: what a visitor without JavaScript gets. The browser re-checks below.
+const state = kelasClosed(new Date(), KELAS.closesAt) ? "closed" : "open";
+const closesAt = KELAS.closesAt;
+---
+
+<Base locale="id" meta={kelas.meta} paths={{ id: "/kelas/" }} card="kelas">
+  <div class="kelas" data-kelas={state}>
+    <!-- Runs before the buttons are parsed, so a closed page never flashes them. Same rule as lib/kelas.ts. -->
+    <script is:inline define:vars={{ closesAt }}>
+      var deadline = Date.parse(closesAt);
+      document.currentScript.parentElement.dataset.kelas = deadline && Date.now() > deadline ? "closed" : "open";
+    </script>
+    <KelasHeader />
+    <main id="main">
+      <KelasHero />
+      <Pair blocks={[kelas.audience, kelas.notFor]} />
+      <Pair blocks={[kelas.work, kelas.takeaway]} />
+      <Trainer />
+      <Steps />
+      <Faq title={kelas.faq.title} items={kelas.faq.items} />
+    </main>
+    <KelasBottom />
+    <StickyDaftar />
+  </div>
+</Base>

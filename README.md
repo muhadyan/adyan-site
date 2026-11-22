@@ -22,7 +22,16 @@ bun run build      # type check + static build into dist/
 | All page text (ID and EN) | `src/content/id.ts`, `src/content/en.ts` (same shape, enforced by type and test) |
 | Project links and screenshots | `src/data/work.ts` |
 | WhatsApp number, email, links | `src/config.ts` |
+| Class page `/kelas` copy (Indonesian only) | `src/content/kelas.ts` |
+| Class sign-up form link and deadline | `src/config.ts` (`KELAS.formUrl`, `KELAS.closesAt`) |
 | Colors, type, spacing | `src/styles/global.css` |
+
+### Class page (`/kelas`)
+
+Sign-up page of the free "AI untuk Kerja" class. Every Daftar button opens `KELAS.formUrl`
+and sends the Umami event `kelas-apply` with `spot` (`hero`, `sticky`, `bottom`).
+After `KELAS.closesAt` the page shows "Pendaftaran sudah ditutup" instead of the buttons
+(checked in the browser and again at build time). No other page links to it yet.
 
 ### Screenshots
 
@@ -36,7 +45,8 @@ bun run build      # type check + static build into dist/
 ### Link preview image
 
 `public/og-id.png` and `public/og-en.png` are rendered from `/og/<lang>/`.
-After changing the hero text, run `bun run dev` and then `bun run og`.
+`public/og-kelas.png` comes from `/og/kelas/`.
+After changing the hero text, run `bun run dev` and then `bun run og` (or `bun run og kelas` for one card).
 
 ## Deploy
 

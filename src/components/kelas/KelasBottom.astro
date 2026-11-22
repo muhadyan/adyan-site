@@ -1,0 +1,69 @@
+---
+// Green closing block (the site footer's look): the class name, the facts and the last Daftar button.
+import { SITE } from "../../config";
+import { kelas } from "../../content/kelas";
+import ApplyButton from "./ApplyButton.astro";
+import Chips from "./Chips.astro";
+
+const { hero } = kelas;
+---
+
+<footer class="bottom">
+  <div class="wrap">
+    <div class="cta">
+      <h2>{hero.title}</h2>
+      <p class="subtitle">{hero.subtitle}</p>
+      <Chips />
+      <ApplyButton spot="bottom" tone="ledger" />
+    </div>
+    <div class="base">
+      <p>© {new Date().getFullYear()} {SITE.name}</p>
+      <a href="/">{SITE.url.replace("https://", "")}</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .bottom {
+    background: var(--ledger);
+    color: #fff;
+  }
+
+  .cta {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    padding-block: clamp(72px, 10vw, 120px) clamp(48px, 6vw, 72px);
+  }
+
+  h2 {
+    font-size: var(--step-4);
+    font-variation-settings: "wdth" 125;
+  }
+
+  .subtitle {
+    max-width: 30rem;
+    color: #e3eee8;
+    font-size: var(--step-1);
+    line-height: 1.35;
+  }
+
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-block: 24px 32px;
+    border-top: 1px solid rgb(255 255 255 / 0.25);
+    color: #d3e3da;
+    font-size: 0.875rem;
+  }
+
+  .base a {
+    color: #fff;
+  }
+
+  .base a:focus-visible {
+    outline-color: #fff;
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+// Two short blocks side by side on wide screens, stacked on phones: "Untuk siapa" next to
+// "Bukan untuk", "Yang kamu kerjakan" next to "Yang kamu bawa pulang".
+interface Block {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  blocks: [Block, Block];
+}
+
+const { blocks } = Astro.props;
+---
+
+<section class="section">
+  <div class="wrap pair">
+    {
+      blocks.map((block) => (
+        <div class="block">
+          <h2>{block.title}</h2>
+          <p>{block.body}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .pair {
+    display: grid;
+    gap: 48px 40px;
+  }
+
+  @media (min-width: 720px) {
+    .pair {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .block {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink);
+  }
+
+  h2 {
+    font-size: var(--step-2);
+  }
+
+  p {
+    max-width: 34rem;
+  }
+</style>

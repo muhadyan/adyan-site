@@ -1,9 +1,10 @@
 ---
-import type { Faq } from "../content/types";
+import type { RichFaq } from "../content/types";
 
 interface Props {
   title: string;
-  items: Faq[];
+  /** Plain answers, or answers with inline links (RichText). */
+  items: RichFaq[];
 }
 
 const { title, items } = Astro.props;
@@ -17,7 +18,11 @@ const { title, items } = Astro.props;
         items.map((item) => (
           <details>
             <summary>{item.q}</summary>
-            <p>{item.a}</p>
+            <p>
+              {typeof item.a === "string"
+                ? item.a
+                : item.a.map((part) => (typeof part === "string" ? part : <a href={part.href}>{part.text}</a>))}
+            </p>
           </details>
         ))
       }

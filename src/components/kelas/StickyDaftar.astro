@@ -1,0 +1,116 @@
+---
+// Phone-only Daftar bar, the class page's twin of StickyWa: it shows once the hero button has
+// scrolled up out of view and hides again at the bottom button. Never shown after the deadline.
+import { KELAS } from "../../config";
+import { kelas } from "../../content/kelas";
+
+// "Gratis · 10 kursi": the first two class facts, as written in the chips.
+const facts = kelas.hero.chips.slice(0, 2).join(" · ");
+---
+
+<a
+  class="sticky-kelas"
+  href={KELAS.formUrl}
+  rel="noopener"
+  target="_blank"
+  data-umami-event="kelas-apply"
+  data-umami-event-spot="sticky"
+  hidden
+>
+  <span class="label">{kelas.apply.cta}</span>
+  <span class="facts">{facts}</span>
+</a>
+
+<script>
+  import { stickyVisible } from "../../lib/sticky";
+
+  const bar = document.querySelector<HTMLElement>(".sticky-kelas");
+  const hero = document.querySelector('[data-umami-event="kelas-apply"][data-umami-event-spot="hero"]');
+  const bottom = document.querySelector('[data-umami-event="kelas-apply"][data-umami-event-spot="bottom"]');
+  if (bar && hero && bottom && "IntersectionObserver" in window) {
+    const state = { heroVisible: true, heroAbove: false, footerReached: false };
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === hero) {
+          state.heroVisible = entry.isIntersecting;
+          state.heroAbove = entry.boundingClientRect.bottom < 0;
+        } else {
+          state.footerReached = entry.isIntersecting || entry.boundingClientRect.bottom < 0;
+        }
+      }
+      bar.hidden = false;
+      bar.toggleAttribute("data-shown", stickyVisible(state));
+    });
+    io.observe(hero);
+    io.observe(bottom);
+  }
+</script>
+
+<style>
+  .sticky-kelas {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 16px env(safe-area-inset-bottom);
+    background: var(--ledger);
+    border-top: 1px solid var(--ledger-deep);
+    color: #fff;
+    text-decoration: none;
+    translate: 0 100%;
+    visibility: hidden;
+    transition:
+      translate 240ms var(--ease-out),
+      visibility 0s 240ms;
+  }
+
+  .sticky-kelas[hidden] {
+    display: none;
+  }
+
+  .sticky-kelas[data-shown] {
+    translate: 0 0;
+    visibility: visible;
+    transition: translate 240ms var(--ease-out);
+  }
+
+  .sticky-kelas:active {
+    background: var(--ledger-deep);
+    color: #fff;
+  }
+
+  /* Sign-ups closed: no bar at all. */
+  :global([data-kelas="closed"]) .sticky-kelas {
+    display: none;
+  }
+
+  .label {
+    font-weight: 600;
+  }
+
+  .facts {
+    color: var(--ledger-tint);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 720px) {
+    .sticky-kelas {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-kelas,
+    .sticky-kelas[data-shown] {
+      translate: 0 0;
+      transition: none;
+    }
+  }
+</style>
