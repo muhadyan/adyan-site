@@ -17,7 +17,7 @@ export const SITE = {
 /** The free "AI untuk Kerja" class page (/kelas). */
 export const KELAS = {
   // Google Form behind every Daftar button. The one value to change when the real link arrives.
-  formUrl: "https://forms.gle/REPLACE_ME",
+  formUrl: "https://forms.gle/5NQaJtzvwDC41mxa8",
   // Sign-ups close Tue 8 Dec 2026, 23:59 WIB. After this the page shows "Pendaftaran sudah ditutup".
   closesAt: "2026-12-08T23:59:59+07:00",
 } as const;
