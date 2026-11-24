@@ -6,6 +6,12 @@ export type Figure = { value: string; label: string };
 
 export type Faq = { q: string; a: string };
 
+/** Text with inline links: "Minta hapus lewat ", { text: "WhatsApp", href: "https://wa.me/..." }, "." */
+export type RichText = (string | { text: string; href: string })[];
+
+/** A FAQ item whose answer may carry links. */
+export type RichFaq = { q: string; a: string | RichText };
+
 /** A service lane with its own page: /website/, /kasir/, /pembukuan/. */
 export type LaneSlug = "website" | "kasir" | "pembukuan";
 

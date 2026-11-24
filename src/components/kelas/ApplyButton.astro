@@ -1,0 +1,94 @@
+---
+// One Daftar button with its closing note, and the "Pendaftaran sudah ditutup" notice that takes
+// its place after the deadline. Both ship in the HTML; the page's data-kelas state picks one.
+import { KELAS } from "../../config";
+import { kelas } from "../../content/kelas";
+
+interface Props {
+  /** Umami spot: where on the page the button sits. */
+  spot: "hero" | "bottom";
+  /** "ledger" on the green bottom block, "paper" elsewhere. */
+  tone?: "paper" | "ledger";
+}
+
+const { spot, tone = "paper" } = Astro.props;
+const { apply } = kelas;
+---
+
+<div class:list={["apply", tone]}>
+  <div class="when-open">
+    <a
+      class="button"
+      href={KELAS.formUrl}
+      rel="noopener"
+      target="_blank"
+      data-umami-event="kelas-apply"
+      data-umami-event-spot={spot}
+    >
+      {apply.cta}
+    </a>
+    <p class="note">{apply.closeNote}</p>
+  </div>
+  <p class="when-closed closed">{apply.closed}</p>
+</div>
+
+<style>
+  :global([data-kelas="closed"]) .when-open,
+  :global([data-kelas="open"]) .when-closed {
+    display: none;
+  }
+
+  .when-open {
+    display: grid;
+    justify-items: start;
+    gap: 8px;
+  }
+
+  .note {
+    color: var(--ink-soft);
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+
+  /* After the deadline: a rubber stamp where the button was. */
+  .closed {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 2px solid var(--stamp);
+    border-radius: 4px;
+    color: var(--stamp);
+    font-weight: 700;
+    font-variation-settings: "wdth" 118;
+    rotate: -1.5deg;
+  }
+
+  .ledger .button {
+    background: #fff;
+    color: var(--ledger-deep);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ledger .button:hover {
+      background: var(--ledger-tint);
+      color: var(--ledger-deep);
+    }
+  }
+
+  .ledger .button:active {
+    background: var(--ledger-tint);
+    color: var(--ledger-deep);
+  }
+
+  .ledger .note {
+    color: #e3eee8;
+  }
+
+  .ledger .button:focus-visible {
+    outline-color: #fff;
+  }
+
+  .ledger .closed {
+    border-color: #fff;
+    color: #fff;
+  }
+</style>

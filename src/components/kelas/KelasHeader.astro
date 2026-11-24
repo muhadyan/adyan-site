@@ -1,0 +1,47 @@
+---
+// Quiet one-line header for the class page: the name only, no language toggle (Indonesian only)
+// and no WhatsApp button (the page's buttons all go to the form).
+import { SITE } from "../../config";
+---
+
+<header class="header">
+  <div class="wrap header-inner">
+    <a class="name" href="/">{SITE.name}</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+  }
+
+  @media (min-width: 720px) {
+    .header-inner {
+      min-height: 64px;
+    }
+  }
+
+  .name {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-variation-settings: "wdth" 118;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+
+  @media (min-width: 720px) {
+    .name {
+      font-size: var(--step-0);
+    }
+  }
+</style>

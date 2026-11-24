@@ -7,15 +7,19 @@ import type { Locale } from "../content/types";
 interface Props {
   locale: Locale;
   meta: { title: string; description: string };
-  /** This page in each language, e.g. { id: "/kasir/", en: "/en/kasir/" }. */
-  paths: Record<Locale, string>;
+  /** This page in each language it has, e.g. { id: "/kasir/", en: "/en/kasir/" }; Indonesian-only pages pass { id }. */
+  paths: Partial<Record<Locale, string>>;
   /** Link-preview card name: og-<card>.png. */
   card: string;
   noindex?: boolean;
 }
 
 const { locale, meta, paths, card, noindex = false } = Astro.props;
-const canonical = new URL(paths[locale], SITE.url).href;
+const self = paths[locale];
+if (!self) throw new Error(`Base: no path for the page's own locale "${locale}"`);
+const canonical = new URL(self, SITE.url).href;
+// Language alternates only when the page has a twin in the other language.
+const alternates = paths.id && paths.en ? { id: paths.id, en: paths.en } : null;
 const ogImage = new URL(`/og-${card}.png`, SITE.url).href;
 
 const jsonLd = siteJsonLd();
@@ -31,9 +35,15 @@ const jsonLd = siteJsonLd();
     <meta name="theme-color" content="#f2f4ef" />
     <meta name="google-site-verification" content={SITE.googleSiteVerification} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
-    <link rel="alternate" hreflang="id" href={new URL(paths.id, SITE.url).href} />
-    <link rel="alternate" hreflang="en" href={new URL(paths.en, SITE.url).href} />
-    <link rel="alternate" hreflang="x-default" href={new URL(paths.id, SITE.url).href} />
+    {
+      alternates && (
+        <>
+          <link rel="alternate" hreflang="id" href={new URL(alternates.id, SITE.url).href} />
+          <link rel="alternate" hreflang="en" href={new URL(alternates.en, SITE.url).href} />
+          <link rel="alternate" hreflang="x-default" href={new URL(alternates.id, SITE.url).href} />
+        </>
+      )
+    }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 

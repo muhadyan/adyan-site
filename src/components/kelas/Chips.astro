@@ -1,0 +1,27 @@
+---
+// The class facts (Gratis · 10 kursi · date · time · Zoom) as a row of chips.
+import { kelas } from "../../content/kelas";
+---
+
+<ul class="chips">
+  {kelas.hero.chips.map((chip) => <li class="chip">{chip}</li>)}
+</ul>
+
+<style>
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 34rem;
+    margin-bottom: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The facts read as figures: the ledger's mono type. */
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+</style>
