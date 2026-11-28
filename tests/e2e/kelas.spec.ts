@@ -136,7 +136,7 @@ test("keeps the class copy readable without JavaScript", async ({ browser }) => 
   const page = await context.newPage();
   await page.goto("/kelas/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("AI untuk Kerja");
-  await expect(page.getByText("Kelas praktik 2 jam untuk kamu yang bukan orang IT.").first()).toBeVisible();
+  await expect(page.getByText("Kelas praktik 2 jam untuk orang non-IT.").first()).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: "Cara daftar" })).toBeVisible();
   // Without the script the build-time state decides: buttons before the deadline, the notice after.
   if (kelasClosed(new Date(), KELAS.closesAt)) {

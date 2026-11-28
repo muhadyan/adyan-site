@@ -66,6 +66,24 @@ describe("kelas copy", () => {
     ]);
   });
 
+  // Adyan's term (2026-11-28): "orang non-IT", not "bukan orang IT".
+  it("says the class is for orang non-IT, in the hero and the share preview", () => {
+    expect(kelas.hero.subtitle).toBe("Kelas praktik 2 jam untuk orang non-IT.");
+    expect(kelas.meta.description).toBe(kelas.hero.subtitle);
+  });
+
+  it("marks the audience as Non-IT", () => {
+    expect(kelas.audience.body).toContain(" Non-IT. ");
+  });
+
+  it("never says 'bukan orang IT'", () => {
+    expect(JSON.stringify(kelas)).not.toMatch(/bukan orang IT/i);
+  });
+
+  it("says the Finance, HR and GA lead was the trainer's last role", () => {
+    expect(kelas.trainer.body).toContain("5+ tahun di Finance, terakhir pimpin Finance, HR dan GA.");
+  });
+
   it("names no employer but Tokopedia", () => {
     const text = JSON.stringify(kelas);
     expect(text).toContain("ex Tokopedia");

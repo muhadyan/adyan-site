@@ -6,11 +6,11 @@ import type { RichFaq } from "./types";
 export const kelas = {
   meta: {
     title: "AI untuk Kerja · Kelas gratis 12 Des",
-    description: "Kelas praktik 2 jam untuk kamu yang bukan orang IT.",
+    description: "Kelas praktik 2 jam untuk orang non-IT.",
   },
   hero: {
     title: "AI untuk Kerja",
-    subtitle: "Kelas praktik 2 jam untuk kamu yang bukan orang IT.",
+    subtitle: "Kelas praktik 2 jam untuk orang non-IT.",
     chips: ["Gratis", "10 kursi", "Sabtu, 12 Des 2026", "09.30-11.30 WIB", "Zoom"],
   },
   apply: {
@@ -20,7 +20,7 @@ export const kelas = {
   },
   audience: {
     title: "Untuk siapa",
-    body: "Usia 20-30. Pemilik usaha, atau kerja di finance, accounting, HR, GA dan admin. Bukan orang IT. Sudah langganan, atau siap langganan sebelum kelas, ChatGPT Plus atau Claude Pro. Bawa laptop.",
+    body: "Usia 20-30. Pemilik usaha, atau kerja di finance, accounting, HR, GA dan admin. Non-IT. Sudah langganan, atau siap langganan sebelum kelas, ChatGPT Plus atau Claude Pro. Bawa laptop.",
   },
   notFor: {
     title: "Bukan untuk",
@@ -37,7 +37,7 @@ export const kelas = {
   trainer: {
     title: "Trainer",
     name: "Adyan Rohutomo.",
-    body: "5+ tahun di Finance, pimpin Finance, HR dan GA. Sekarang senior engineer (ex Tokopedia) yang memakai AI tiap hari.",
+    body: "5+ tahun di Finance, terakhir pimpin Finance, HR dan GA. Sekarang senior engineer (ex Tokopedia) yang memakai AI tiap hari.",
   },
   steps: {
     title: "Cara daftar",
